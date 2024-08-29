@@ -51,7 +51,7 @@ O Mercado Virtual é uma aplicação web projetada para facilitar a compra e ven
 │   ├── **/partials**  
 │   │   ├── header.hbs       # Cabeçalho compartilhado  
 │   │   ├── footer.hbs       # Rodapé compartilhado  
-│   └── **/products**  
+│   └── **/pages**  
 │       ├── list.hbs         # Página para listagem de produtos  
 │       ├── detail.hbs       # Página de detalhes do produto  
 │       └── addEdit.hbs      # Formulário de adicionar/editar produtos  
@@ -73,13 +73,13 @@ O Mercado Virtual é uma aplicação web projetada para facilitar a compra e ven
 ├── **/utils**  
 │   └── helpers.js           # Funções auxiliares e utilitários  
 │  
-├── app.js                   # Arquivo principal do servidor Node.js  
+├── app.js                   # Aplicativo node
+├── server.js                # Arquivo para rodar o servidor   
 ├── package.json             # Gerenciador de pacotes e dependências  
 ├── .env.exemple             # Exemplo de variáveis de ambiente
 ├── eslint.config.mjs        # Configuração do ESLint
 ├── .gitignore               # Arquivos e pastas a serem ignorados pelo git
 ├── database.sql             # Banco de dados a ser inserido no mysql
-├── inserts.sql              # Inserts base para o banco
 └── README.md                # Documentação do projeto  
 ```
 
