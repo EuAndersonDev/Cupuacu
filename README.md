@@ -75,6 +75,11 @@ O Mercado Virtual é uma aplicação web projetada para facilitar a compra e ven
 │  
 ├── app.js                   # Arquivo principal do servidor Node.js  
 ├── package.json             # Gerenciador de pacotes e dependências  
+├── .env.exemple             # Exemplo de variáveis de ambiente
+├── eslint.config.mjs        # Configuração do ESLint
+├── .gitignore               # Arquivos e pastas a serem ignorados pelo git
+├── database.sql             # Banco de dados a ser inserido no mysql
+├── inserts.sql              # Inserts base para o banco
 └── README.md                # Documentação do projeto  
 ```
 
