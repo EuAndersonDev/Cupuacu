@@ -163,5 +163,3 @@ Contribuições são bem-vindas! Por favor, siga os passos abaixo para contribui
 - **Jader Peres** - FrontEnd Developer
 - **GitHub**: [JaderGP011](https://github.com/JaderGP011)
 ---
-
-Esse README oferece uma visão clara do seu projeto e orienta os usuários em todas as etapas, desde a instalação até a contribuição.
