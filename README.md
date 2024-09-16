@@ -7,6 +7,9 @@ O Mercado Virtual é uma aplicação web projetada para facilitar a compra e ven
 
 ---
 
+**Prototipo figma: **
+https://www.figma.com/design/1VVoyva0P6yTUpIDtmL4oW/Mercado?node-id=0-1&t=Ws59tH6CeCzhe7s7-1
+
 ## Índice
 
 - [Estrutura do Projeto](#estrutura-do-projeto)
