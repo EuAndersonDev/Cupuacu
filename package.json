@@ -1,5 +1,5 @@
 {
-  "name": "mercado-virtual",
+  "name": "s",
   "version": "1.0.0",
   "description": "Projeto de um mercado virtual",
   "main": "index.js",
@@ -17,9 +17,24 @@
     "express": "^4.19.2",
     "hbs": "^4.2.0",
     "mysql2": "^3.11.0",
-    "nodemailer": "^6.9.15"
+    "nodemailer": "^6.9.15",
+    "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "eslint": "^9.9.1"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EuAndersonDev/Cupuacu.git"
+  },
+  "keywords": [
+    "root"
+  ],
+  "bugs": {
+    "url": "https://github.com/EuAndersonDev/Cupuacu/issues"
+  },
+  "homepage": "https://github.com/EuAndersonDev/Cupuacu#readme"
 }
