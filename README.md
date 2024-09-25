@@ -1,14 +1,18 @@
+---
+
 # Cupuaçu
 
 ---
 
 **Descrição:**  
-O Mercado Virtual é uma aplicação web projetada para facilitar a compra e venda de produtos online. O sistema oferece uma interface simples e intuitiva para que os clientes possam navegar, selecionar e comprar produtos, enquanto os administradores têm a capacidade de gerenciar o catálogo de produtos. O projeto utiliza Node.js e MySQL no backend, com Handlebars, CSS, e JavaScript no frontend.
+O Mercado Virtual é uma aplicação web projetada para facilitar a compra e venda de produtos online. O sistema oferece uma interface simples e intuitiva para que os clientes possam navegar, selecionar e comprar produtos, enquanto os administradores têm a capacidade de gerenciar o catálogo de produtos. O projeto utiliza Node.js e MySQL no backend, com React no frontend.
 
 ---
 
-**Prototipo de figma:**
-https://www.figma.com/design/1VVoyva0P6yTUpIDtmL4oW/Mercado?node-id=0-1&t=Ws59tH6CeCzhe7s7-1
+**Protótipo de Figma:**  
+[Mercado Virtual - Figma](https://www.figma.com/design/1VVoyva0P6yTUpIDtmL4oW/Mercado?node-id=0-1&t=Ws59tH6CeCzhe7s7-1)
+
+---
 
 ## Índice
 
@@ -48,23 +52,13 @@ https://www.figma.com/design/1VVoyva0P6yTUpIDtmL4oW/Mercado?node-id=0-1&t=Ws59tH
 │   ├── userRoutes.js        # Rotas para gerenciamento de usuários  
 │   └── orderRoutes.js       # Rotas para operações com pedidos  
 │  
-├── **/views**  
-│   ├── **/layouts**  
-│   │   └── main.hbs         # Layout principal do site  
-│   ├── **/partials**  
-│   │   ├── header.hbs       # Cabeçalho compartilhado  
-│   │   ├── footer.hbs       # Rodapé compartilhado  
-│   └── **/pages**  
-│       ├── list.hbs         # Página para listagem de produtos  
-│       ├── detail.hbs       # Página de detalhes do produto  
-│       └── addEdit.hbs      # Formulário de adicionar/editar produtos  
-│  
-├── **/public**  
-│   ├── **/css**  
-│   │   └── styles.css       # Estilos CSS  
-│   ├── **/js**  
-│   │   └── main.js          # Scripts JavaScript  
-│   └── **/images**          # Imagens do site  
+├── **/client**              # Diretório do React (frontend)  
+│   ├── **/public**          # Arquivos públicos do React (favicon, index.html, etc.)  
+│   ├── **/src**  
+│   │   ├── **/components**  # Componentes React (Navbar, Footer, ProductList, etc.)  
+│   │   ├── **/pages**       # Páginas do React (Home, ProductDetails, Cart, etc.)  
+│   │   ├── App.js           # Componente principal do React  
+│   │   └── index.js         # Ponto de entrada do React  
 │  
 ├── **/middleware**  
 │   └── authMiddleware.js    # Middleware para proteger rotas  
@@ -76,13 +70,13 @@ https://www.figma.com/design/1VVoyva0P6yTUpIDtmL4oW/Mercado?node-id=0-1&t=Ws59tH
 ├── **/utils**  
 │   └── helpers.js           # Funções auxiliares e utilitários  
 │  
-├── app.js                   # Aplicativo node
+├── app.js                   # Aplicativo Node.js  
 ├── server.js                # Arquivo para rodar o servidor   
 ├── package.json             # Gerenciador de pacotes e dependências  
-├── .env.exemple             # Exemplo de variáveis de ambiente
-├── eslint.config.mjs        # Configuração do ESLint
-├── .gitignore               # Arquivos e pastas a serem ignorados pelo git
-├── database.sql             # Banco de dados a ser inserido no mysql
+├── .env.example             # Exemplo de variáveis de ambiente  
+├── eslint.config.mjs        # Configuração do ESLint  
+├── .gitignore               # Arquivos e pastas a serem ignorados pelo git  
+├── database.sql             # Script de banco de dados MySQL  
 └── README.md                # Documentação do projeto  
 ```
 
@@ -107,13 +101,20 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
     cd MercadoJAM
     ```
 
-2. Instale as dependências:
+2. Instale as dependências do backend:
 
     ```bash
     npm install
     ```
 
-3. Configuração do banco de dados:
+3. Acesse o diretório `client` e instale as dependências do frontend (React):
+
+    ```bash
+    cd client
+    npm install
+    ```
+
+4. Configuração do banco de dados:
 
     Certifique-se de ter o MySQL configurado.  
     Copie o arquivo `.env.example` para `.env` e preencha com suas informações de banco de dados:
@@ -135,16 +136,18 @@ Para iniciar o servidor em modo de desenvolvimento, use o comando:
 npm run dev
 ```
 
-### Endpoints (http://localhost:3333)
+Isso iniciará o backend em `http://localhost:3333` e o frontend React em `http://localhost:3000`.
+
+### Endpoints (Backend)
 
 - `GET /products`: Obtém todos os produtos.
 - `POST /products`: Adiciona um novo produto (apenas administrador).
 - `GET /users`: Obtém todos os usuários.
 - `POST /users/login`: Autentica um usuário.
 
-### Interface
+### Interface (Frontend)
 
-A interface do usuário pode ser acessada em `http://localhost:3000`. Nela, é possível visualizar, adicionar ao carrinho, e comprar produtos.
+A interface do usuário pode ser acessada em `http://localhost:3000`. Nela, é possível visualizar, adicionar ao carrinho e comprar produtos.
 
 ---
 
@@ -164,10 +167,11 @@ Contribuições são bem-vindas! Por favor, siga os passos abaixo para contribui
 
 - **Anderson Reis** - FullStack Developer
 - **GitHub**: [AndersonReis04](https://github.com/EuAndersonDev)
-
+  
 - **Matheus Vinicius** - Backend Developer
 - **GitHub**: [Matheus Vinicius](https://github.com/matheusviniciusbrito)
-
+  
 - **Jader Peres** - FrontEnd Developer
 - **GitHub**: [JaderGP011](https://github.com/JaderGP011)
+
 ---
