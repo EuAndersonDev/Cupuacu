@@ -1,17 +1,28 @@
-const connection = require ("/config/connection.js");
+const path = require('path');
+const connection = require(path.join(__dirname, '../config/db'));
 
 const getAll = async () =>{
     const [products] = await connection.execute("SELECT * FROM products");
     return products;
 }
 
-const createProduct = async () =>{
-    const {name} = products;
+
+const createProduct = async ({ name, description, price, stock_quantity }) => {
     const dataUTC = new Date(Date.now()).toUTCString();
-    const query = "INSERT INTO tasks (name, description, price, stock_quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
-    const createdProduct = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
-    return {insertId:createdProduct.insertId, name, description, price, stock_quantity, created_at: dataUTC, updated_at: dataUTC};
+    const query = "INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    const [createdProduct] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
+    return { 
+        insertId: createdProduct.insertId, 
+        name, 
+        description, 
+        price, 
+        stock_quantity, 
+        created_at: dataUTC, 
+        updated_at: dataUTC 
+    };
 };
+
 
 const updateProduct = async (id, product) =>{
     const {name, description, price, stock_quantity} = product;
