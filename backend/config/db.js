@@ -1,6 +1,3 @@
-
-console.log("DB Config Loaded")
-
 const mysql = require("mysql2/promise");
 require("dotenv").config();
 
@@ -11,18 +8,20 @@ const connection = mysql.createPool({
     database: process.env.MYSQL_DB,
 });
 
-// Função para testar a conexão
+
 const testConnection = async () => {
     try {
         const conn = await connection.getConnection();
         console.log('Conexão de teste ao banco de dados estabelecida com sucesso.');
-        await conn.release(); // Libera a conexão após o teste
+        conn.release();
     } catch (error) {
-        console.error('Erro ao conectar ao banco de dados de teste:', error);
+        console.error('Erro ao conectar ao banco de dados:', error.message); // Melhor especificar a mensagem de erro
     }
 };
 
-// Chame a função de teste
-testConnection();
+
+testConnection()
+    .then(() => console.log("DB Config Loaded"))
+    .catch(err => console.error("Erro na configuração do banco:", err));
 
 module.exports = connection;

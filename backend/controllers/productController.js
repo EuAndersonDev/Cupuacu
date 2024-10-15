@@ -1,9 +1,9 @@
-const product = require("../models/productModel");
+const productModel = require("../models/productModel");
 
 const getAll = async (req, res) => {
-    const tasks = await productModel.getAll();
+    const products = await product.getAll();
     return res.status(200).json(products);
-}
+};
 
 const createProduct = async (req, res) => {
     console.log(req.body);  
