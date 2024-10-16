@@ -1,19 +1,21 @@
 const path = require('path');
 const connection = require(path.join(__dirname, '../config/db'));
 
-const getAll = async () =>{
+const getAll = async () => {
     const [products] = await connection.execute("SELECT * FROM products");
     return products;
-}
+};
 
 
 const createProduct = async ({ name, description, price, stock_quantity }) => {
-    const dataUTC = new Date(Date.now()).toUTCString();
-    const query = "INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
-    
-    const [createdProduct] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
+    const dataUTC = new Date().toUTCString();
+    const query = `
+        INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    const [{ insertId }] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
     return { 
-        insertId: createdProduct.insertId, 
+        insertId, 
         name, 
         description, 
         price, 
@@ -22,6 +24,7 @@ const createProduct = async ({ name, description, price, stock_quantity }) => {
         updated_at: dataUTC 
     };
 };
+
 
 
 const updateProduct = async (id, product) =>{
@@ -33,16 +36,12 @@ const updateProduct = async (id, product) =>{
 };
 
 
-const deleteProduct = async (id) => { 
-    const query = "DELETE FROM products WHERE id = ?";
-    await connection.execute(query, [id]);
-    return { id };
-};
+
 
 
 module.exports = {
     getAll,
     createProduct,
     updateProduct,
-    deleteProcuct
+   
 };
