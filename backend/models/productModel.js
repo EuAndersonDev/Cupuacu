@@ -6,6 +6,12 @@ const getAll = async () => {
     return products;
 };
 
+const getProductById = async (id) => {
+    const query = "SELECT * FROM products WHERE id = ?";
+    const [products] = await connection.execute(query, [id]);
+    return products[0];
+};
+
 
 const createProduct = async ({ name, description, price, stock_quantity }) => {
     const dataUTC = new Date().toUTCString();
@@ -27,12 +33,18 @@ const createProduct = async ({ name, description, price, stock_quantity }) => {
 
 
 
-const updateProduct = async (id, product) =>{
+const updateProduct = async (id, product) => {
     const {name, description, price, stock_quantity} = product;
     const dataUTC = new Date(Date.now()).toUTCString();
     const query = "UPDATE products SET name = ?, description = ?, price = ?, stock_quantity = ?, updated_at = ? WHERE id = ?";
     await connection.execute(query, [name, description, price, stock_quantity, dataUTC, id]);
     return {id, name, description, price, stock_quantity, updated_at: dataUTC};
+};
+
+const deleteProduct = async (id) => {
+    const query = "DELETE FROM products WHERE id = ?";
+    const [result] = await connection.execute(query, [id]); 
+    return result; 
 };
 
 
@@ -43,5 +55,7 @@ module.exports = {
     getAll,
     createProduct,
     updateProduct,
+    deleteProduct,
+    getProductById
    
 };
