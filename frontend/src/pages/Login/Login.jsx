@@ -1,37 +1,54 @@
-import React from "react";
-import login from "./login.css";
+import {
+  Body,
+  Container,
+  LoginSection,
+  LoginTitle,
+  LoginSubtitle,
+  LoginText,
+  Label,
+  Input,
+  LoginButton,
+  ForgotPassword,
+  RegisterSection,
+  RegisterTitle,
+  RegisterText,
+  RegisterButton
+} from '../../styles/LoginStyles';
+
 function Login() {
   return (
-    <div id="loginBox">
-      <div class="login">
-        <h2>Bem vindo!</h2>
-        <h3>Acesse sua conta</h3>
-        <p>Fácil, prático e barato :)</p>
+    <Body>
+      <Container>
+        <LoginSection>
+          <LoginTitle>Bem vindo!</LoginTitle>
+          <LoginSubtitle>Acesse sua conta</LoginSubtitle>
+          <LoginText>Fácil, prático e barato :)</LoginText>
 
-        <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="Digite seu e-mail" />
+          <Label htmlFor="email">E-mail</Label>
+          <Input type="email" id="email" placeholder="Digite seu e-mail" />
 
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" placeholder="Sua senha" />
+          <Label htmlFor="senha">Senha</Label>
+          <Input type="password" id="senha" placeholder="Sua senha" />
 
-        <div class="forgot-password">
-          <a href="#">Esqueceu sua senha?</a>
-        </div>
+          <ForgotPassword>
+            <a href="#">Esqueceu sua senha?</a>
+          </ForgotPassword>
 
-        <button>Entrar</button>
-      </div>
+          <LoginButton>Entrar</LoginButton>
+        </LoginSection>
 
-      <div class="register">
-        <h2>Criar uma conta é rápido, fácil e gratuito!</h2>
-        <p>
-          Cadastre-se no Mercado Cupuaçu e aproveite vantagens exclusivas! Com
-          sua conta, você terá acesso a ofertas especiais, poderá acompanhar
-          seus pedidos e realizar suas compras com facilidade.
-        </p>
-        <button>Criar minha conta</button>
-      </div>
-    </div>
+        <RegisterSection>
+          <RegisterTitle>Criar uma conta é rápido, fácil e gratuito!</RegisterTitle>
+          <RegisterText>
+            Cadastre-se no Mercado Cupuaçu e aproveite vantagens exclusivas! Com
+            sua conta, você terá acesso a ofertas especiais, poderá acompanhar
+            seus pedidos e realizar suas compras com facilidade.
+          </RegisterText>
+          <RegisterButton>Criar minha conta</RegisterButton>
+        </RegisterSection>
+      </Container>
+    </Body>
   );
-};
+}
 
 export default Login;

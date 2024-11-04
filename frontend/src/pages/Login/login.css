@@ -1,107 +1,107 @@
- /* Estilos básicos da página */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #a0e8e1;
-        }
+    /* Estilos básicos da página */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background-color: #a0e8e1;
+            }
 
-        /* Container principal */
-        .container {
-            display: flex;
-            width: 800px;
-            background-color: #A0E8E1;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+            /* Container principal */
+            .container {
+                display: flex;
+                width: 800px;
+                background-color: #A0E8E1;
+                padding: 20px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
 
-        /* Seção de login */
-        .login {
-            background-color: #C8F7F4;
-            padding: 20px;
-            width: 50%;
-            border-radius: 10px;
-        }
+            /* Seção de login */
+            .login {
+                background-color: #C8F7F4;
+                padding: 20px;
+                width: 50%;
+                border-radius: 10px;
+            }
 
-        .login h2 {
-            font-size: 24px;
-            color: #000;
-        }
+            .login h2 {
+                font-size: 24px;
+                color: #000;
+            }
 
-        .login h3 {
-            font-size: 18px;
-            color: #000;
-            margin-top: 5px;
-        }
+            .login h3 {
+                font-size: 18px;
+                color: #000;
+                margin-top: 5px;
+            }
 
-        .login p {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 15px;
-        }
+            .login p {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 15px;
+            }
 
-        .login label {
-            font-size: 14px;
-            color: #000;
-        }
+            .login label {
+                font-size: 14px;
+                color: #000;
+            }
 
-        .login input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+            .login input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
 
-        .login button {
-            width: 100%;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+            .login button {
+                width: 100%;
+                padding: 10px;
+                background-color: #000;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
-        .login .forgot-password {
-            font-size: 12px;
-            text-align: right;
-            color: #666;
-        }
+            .login .forgot-password {
+                font-size: 12px;
+                text-align: right;
+                color: #666;
+            }
 
-        /* Seção de cadastro */
-        .register {
-            width: 50%;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            color: #000;
-        }
+            /* Seção de cadastro */
+            .register {
+                width: 50%;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                color: #000;
+            }
 
-        .register h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
+            .register h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
 
-        .register p {
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
+            .register p {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 15px;
+            }
 
-        .register button {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #000;
-            background-color: transparent;
-            color: #000;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+            .register button {
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #000;
+                background-color: transparent;
+                color: #000;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }

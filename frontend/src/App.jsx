@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import './App.css'
-import Login from './pages/Login/Login.jsx'
+import { Link } from 'react-router-dom';
 
 function App() {
-    return (
-        <>
-        <Login/>
-        </>
-    )
+  return (
+    <div>
+      <h1>Página Principal</h1>
+      <Link to="/login">Ir para Login</Link>
+    </div>
+  );
 }
 
-export default App
+export default App;
