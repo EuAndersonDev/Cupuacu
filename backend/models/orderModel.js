@@ -3,27 +3,17 @@
 const db = require('../config/db'); // Conexão com o banco de dados
 
 // Função para criar um novo pedido
-const createOrder = async (userId, totalAmount, items) => {
-  // Insere o pedido na tabela `orders`
-  const [orderResult] = await db.promise().query(
-    'INSERT INTO orders (user_id, total_amount, created_at) VALUES (?, ?, NOW())',
-    [userId, totalAmount]
-  );
-
-  const orderId = orderResult.insertId;
-
-  // Insere os itens do pedido na tabela `order_items`
-  const orderItemsPromises = items.map((item) => {
-    return db.promise().query(
-      'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
-      [orderId, item.product_id, item.quantity, item.price]
-    );
-  });
-
-  await Promise.all(orderItemsPromises);
-
-  return orderId;
+const createOrder = async (userId, totalPrice, items) => {
+  try {
+    const itemsJson = JSON.stringify(items);
+    const query = 'CALL create_order(?, ?, ?)';
+    await db.execute(query, [userId, totalPrice, itemsJson]);
+  } catch (error) {
+    console.error('Erro ao criar pedido:', error);
+    throw error;
+  }
 };
+
 
 // Função para obter todos os pedidos de um usuário
 const getOrdersByUser = async (userId) => {

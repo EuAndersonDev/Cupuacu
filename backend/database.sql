@@ -72,3 +72,38 @@ CREATE TABLE cart (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
+DELIMITER //
+
+CREATE PROCEDURE create_order(
+    IN p_user_id INT,
+    IN p_total_price DECIMAL(10, 2),
+    IN p_items JSON
+)
+BEGIN
+    DECLARE order_id INT;
+
+    -- Inicia a transação
+    START TRANSACTION;
+
+    -- Insere o pedido na tabela `orders`
+    INSERT INTO orders (user_id, total_price, created_at)
+    VALUES (p_user_id, p_total_price, NOW());
+
+    -- Obtém o ID do pedido recém-criado
+    SET order_id = LAST_INSERT_ID();
+
+    -- Insere os itens do pedido na tabela `order_items`
+    INSERT INTO order_items (order_id, product_id, quantity, unit_price, created_at)
+    SELECT order_id, JSON_UNQUOTE(JSON_EXTRACT(item, '$.product_id')),
+           JSON_UNQUOTE(JSON_EXTRACT(item, '$.quantity')),
+           JSON_UNQUOTE(JSON_EXTRACT(item, '$.price')),
+           NOW()
+    FROM JSON_TABLE(p_items, '$[*]' COLUMNS (
+        item JSON PATH '$'
+    )) AS items;
+
+    -- Confirma a transação
+    COMMIT;
+END //
+
+DELIMITER ;
