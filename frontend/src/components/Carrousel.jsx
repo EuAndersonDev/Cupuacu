@@ -17,13 +17,18 @@ function Carrousel() {
         {
           title: "Liquidificador com desconto!",
           image: "liquidificador.png",
-          button: "Comprar Agora",
+          button: "Compre Agora",
         },
+        {
+          title: "Arroz Branco",
+          image: "",//imagem
+          button: "Compre Agora"
+        }
       ];
       
 
     return (
-        <div className="w-full bg-blue-200">
+        <div className="carrosel">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation
@@ -36,7 +41,7 @@ function Carrousel() {
                 <div className="flex justify-between items-center p-8">
                   <div>
                     <h1 className="text-3xl font-bold">{item.title}</h1>
-                    <button className="mt-4 bg-pink-500 text-white px-4 py-2 rounded">
+                    <button className="botaoCompra">
                       {item.button}
                     </button>
                   </div>

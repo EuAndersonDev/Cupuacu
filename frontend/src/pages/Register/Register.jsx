@@ -14,6 +14,8 @@ import {
   RegisterText,
   RegisterButton
 } from '../../styles/LoginStyles';
+import { Link } from 'react-router-dom';
+
 
 function Register() {
   return (
@@ -40,7 +42,7 @@ function Register() {
             <a href="#"></a>
           </ForgotPassword>
 
-          <LoginButton>Entrar</LoginButton>
+          <LoginButton>Cadastrar</LoginButton>
         </LoginSection>
 
         <RegisterSection>
@@ -48,7 +50,9 @@ function Register() {
           <RegisterText>
           Faça login para acompanhar seus pedidos e continuar suas compras de onde parou.
           </RegisterText>
-          <RegisterButton>Criar minha conta</RegisterButton>
+          <Link to="/login">
+            <RegisterButton>Entrar em minha conta</RegisterButton>
+          </Link>
         </RegisterSection>
       </Container>
     </Body>
