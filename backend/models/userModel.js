@@ -33,10 +33,20 @@ const deleteUser = async (id) => {
     return result;
 };
 
+const findEmailNameAndPassword = async (email) => {
+    const [rows] = await connection.execute(
+        'SELECT id, email, password FROM users WHERE email = ?',
+        [email]
+    );
+    return rows[0]; 
+};
+
+
 module.exports = {
     getAll,
     getUserById,
     createUser,
     updateUser,
     deleteUser,
-}
+    findEmailNameAndPassword,
+};

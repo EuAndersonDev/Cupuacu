@@ -75,35 +75,31 @@ CREATE TABLE cart (
 DELIMITER //
 
 CREATE PROCEDURE create_order(
-    IN p_user_id INT,
-    IN p_total_price DECIMAL(10, 2),
+    IN p_userId INT,
+    IN p_totalAmount DECIMAL(10, 2),
     IN p_items JSON
 )
 BEGIN
-    DECLARE order_id INT;
+    DECLARE v_orderId INT;
 
-    -- Inicia a transação
-    START TRANSACTION;
-
-    -- Insere o pedido na tabela `orders`
-    INSERT INTO orders (user_id, total_price, created_at)
-    VALUES (p_user_id, p_total_price, NOW());
+    -- Insere o pedido na tabela orders
+    INSERT INTO orders (user_id, total_amount, created_at, updated_at)
+    VALUES (p_userId, p_totalAmount, NOW(), NOW());
 
     -- Obtém o ID do pedido recém-criado
-    SET order_id = LAST_INSERT_ID();
+    SET v_orderId = LAST_INSERT_ID();
 
-    -- Insere os itens do pedido na tabela `order_items`
-    INSERT INTO order_items (order_id, product_id, quantity, unit_price, created_at)
-    SELECT order_id, JSON_UNQUOTE(JSON_EXTRACT(item, '$.product_id')),
+    -- Insere os itens do pedido na tabela order_items
+    INSERT INTO order_items (order_id, product_id, quantity, price)
+    SELECT v_orderId, JSON_UNQUOTE(JSON_EXTRACT(item, '$.product_id')),
            JSON_UNQUOTE(JSON_EXTRACT(item, '$.quantity')),
-           JSON_UNQUOTE(JSON_EXTRACT(item, '$.price')),
-           NOW()
+           JSON_UNQUOTE(JSON_EXTRACT(item, '$.price'))
     FROM JSON_TABLE(p_items, '$[*]' COLUMNS (
         item JSON PATH '$'
     )) AS items;
 
-    -- Confirma a transação
-    COMMIT;
+    -- Retorna o ID do pedido
+    SELECT v_orderId AS orderId;
 END //
 
 DELIMITER ;
