@@ -105,4 +105,12 @@ export const RegisterButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+
+  /* Efeito de hover */
+  &:hover {
+    background-color: #000;    /* Cor de fundo muda para preto */
+    color: #fff;               /* Cor do texto muda para branco */
+    border: 2px solid #fff;    /* Borda muda para branco */
+  }
 `;
+

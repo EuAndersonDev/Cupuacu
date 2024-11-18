@@ -14,6 +14,7 @@ import {
   RegisterText,
   RegisterButton
 } from '../../styles/LoginStyles';
+import { Link } from 'react-router-dom';
 
 function Register() {
   return (
@@ -44,7 +45,9 @@ function Register() {
             sua conta, você terá acesso a ofertas especiais, poderá acompanhar
             seus pedidos e realizar suas compras com facilidade.
           </RegisterText>
-          <RegisterButton>Criar minha conta</RegisterButton>
+          <Link to="/register">
+            <RegisterButton>Criar minha conta</RegisterButton>
+          </Link>
         </RegisterSection>
       </Container>
     </Body>
