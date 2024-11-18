@@ -15,7 +15,7 @@ import {
   RegisterButton
 } from '../../styles/LoginStyles';
 
-function Login() {
+function Register() {
   return (
     <Body>
       <Container>
@@ -51,4 +51,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
