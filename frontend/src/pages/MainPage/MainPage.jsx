@@ -1,25 +1,13 @@
-import { 
-  Body, 
-  Input,
-  Logo 
-} from "../../styles/MainStyles";
+import Header from '../../components/Header.jsx';
+import { MainContainer } from '../../styles/HeaderStyles.js';
 
 function MainPage() {
   return (
-    <Body>
-      <header>
-        <Logo src="" alt="Logotipo do cupuaçu" />
-        <Input type = "text" placeholder="o que você precisa?" />
-        <div>
-          
-        </div>
-      </header>
-
-
-      
-    </Body>
+    <MainContainer>
+      <Header />
+      {/* Outros componentes ou conteúdo da MainPage */}
+    </MainContainer>
   );
 }
 
 export default MainPage;
-
