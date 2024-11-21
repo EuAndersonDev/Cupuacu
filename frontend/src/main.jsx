@@ -8,13 +8,12 @@ import GlobalStyle from './styles/global'; // Importando os estilos globais
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GlobalStyle /> {/* Aplicando os estilos globais */}
+    <GlobalStyle />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/main" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
