@@ -27,11 +27,11 @@ export const ProductDetails = styled.div`
 export const ProductName = styled.h2`
   font-size: 2.5rem;
   margin: 10px 0;
-  color: #e0e0e0;
+  color: #333; /* Changed color */
 `;
 
 export const OriginalPrice = styled.p`
-  color: #777;
+  color: #555; /* Changed color */
   font-size: 0.9rem;
   text-decoration: line-through;
 `;
@@ -49,7 +49,7 @@ export const Discount = styled.p`
 
 export const Installments = styled.p`
   font-size: 1rem;
-  color: #b0b0b0;
+  color: #555; /* Changed color */
 `;
 
 export const FreeShipping = styled.p`
@@ -97,4 +97,10 @@ export const CalculateButton = styled.button`
   &:hover {
     background-color: #e69500;
   }
+`;
+
+export const ProductDescription = styled.p`
+  font-size: 1rem;
+  color: #555; /* Changed color */
+  margin: 10px 0;
 `;
