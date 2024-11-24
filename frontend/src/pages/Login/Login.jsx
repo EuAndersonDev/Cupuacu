@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Body,
   Container,
@@ -16,7 +17,34 @@ import {
 } from '../../styles/LoginStyles';
 import { Link } from 'react-router-dom';
 
-function Register() {
+function Login() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, senha }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // Sucesso no login, faça algo com os dados recebidos
+        console.log('Login bem-sucedido:', data);
+      } else {
+        // Erro no login, mostre uma mensagem de erro
+        console.error('Erro no login:', data.message);
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+    }
+  };
+
   return (
     <Body>
       <Container>
@@ -25,17 +53,31 @@ function Register() {
           <LoginSubtitle>Acesse sua conta</LoginSubtitle>
           <LoginText>Fácil, prático e barato :)</LoginText>
 
-          <Label htmlFor="email">E-mail</Label>
-          <Input type="email" id="email" placeholder="Digite seu e-mail" />
+          <form onSubmit={handleLogin}>
+            <Label htmlFor="email">E-mail</Label>
+            <Input
+              type="email"
+              id="email"
+              placeholder="Digite seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <Label htmlFor="senha">Senha</Label>
-          <Input type="password" id="senha" placeholder="Sua senha" />
+            <Label htmlFor="senha">Senha</Label>
+            <Input
+              type="password"
+              id="senha"
+              placeholder="Sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+            />
 
-          <ForgotPassword>
-            <a href="#">Esqueceu sua senha?</a>
-          </ForgotPassword>
+            <ForgotPassword>
+              <a href="#">Esqueceu sua senha?</a>
+            </ForgotPassword>
 
-          <LoginButton>Entrar</LoginButton>
+            <LoginButton type="submit">Entrar</LoginButton>
+          </form>
         </LoginSection>
 
         <RegisterSection>
@@ -54,4 +96,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
