@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HeaderContainer, Logo, SearchBox, SearchInput, SearchIcon, IconContainer, Icon, UserTextContainer } from '../styles/HeaderStyles';
 import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa'; // Importando ícones do React Icons
 
@@ -24,7 +24,9 @@ function Header() {
   return (
     <HeaderContainer>
       <Logo>
-        <img src="/logo.ico" alt="Logo" />
+        <Link to="/">
+          <img src="/logo.ico" alt="Logo" />
+        </Link>
       </Logo>
       <SearchBox>
         <SearchInput type="text" placeholder="Do que você precisa?" />

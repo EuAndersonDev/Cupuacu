@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Header from '../../components/Header.jsx';
 import {
   ProductPageContainer,
@@ -16,13 +17,33 @@ import {
   CepInputContainer,
   CepInput,
   CalculateButton,
-  ProductDescription // Import the new style
+  ProductDescription
 } from '../../styles/ProductPageStyles.js';
 
 const ProductPage = () => {
-  const location = useLocation();
-  const { product } = location.state || {};
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [cep, setCep] = useState('');
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/products/${id}`);
+        const product = response.data;
+
+        // Calcula um desconto aleatório entre 0% e 30% para o produto
+        const discountPercentage = Math.random() * 30;
+        product.discountedPrice = parseFloat(product.price);
+        product.originalPrice = product.discountedPrice / (1 - discountPercentage / 100);
+
+        setProduct(product);
+      } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   if (!product) {
     return <div>Produto não encontrado</div>;
@@ -50,7 +71,7 @@ const ProductPage = () => {
           <Discount>{((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF</Discount>
           <Installments>em 12x R${(product.discountedPrice / 12).toFixed(2)}</Installments>
           <FreeShipping>Frete grátis</FreeShipping>
-          <ProductDescription>{product.description}</ProductDescription> {/* Add this line */}
+          <ProductDescription>{product.description}</ProductDescription>
           <BuyButton onClick={handleBuyClick}>Comprar</BuyButton>
           <CepInputContainer>
             <CepInput

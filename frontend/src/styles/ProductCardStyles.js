@@ -1,100 +1,80 @@
 import styled from 'styled-components';
 
-export const ProductPageContainer = styled.div`
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  display: flex;
-  gap: 40px;
-`;
+export const ProductCardContainer = styled.div`
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  background-color: #fff;
 
-export const ProductImageContainer = styled.div`
-  flex: 1;
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 export const ProductImage = styled.img`
   width: 100%;
-  border-radius: 10px;
+  height: 200px;
+  object-fit: cover;
 `;
 
 export const ProductDetails = styled.div`
-  flex: 1;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
-export const ProductName = styled.h2`
-  font-size: 2.5rem;
-  margin: 10px 0;
-  color: #e0e0e0;
+export const ProductName = styled.h3`
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
 `;
 
 export const OriginalPrice = styled.p`
   color: #777;
   font-size: 0.9rem;
   text-decoration: line-through;
+  margin: 0;
 `;
 
 export const DiscountedPrice = styled.p`
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #ffa500;
-  margin: 10px 0;
+  margin: 0;
 `;
 
 export const Discount = styled.p`
   color: #81c784;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  margin: 0;
 `;
 
 export const Installments = styled.p`
-  font-size: 1rem;
-  color: #b0b0b0;
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
 `;
 
 export const FreeShipping = styled.p`
-  font-size: 1rem;
-  color: #81c784;
+  font-size: 0.9rem;
+  color: #81c784; /* Green color for free shipping text */
+  margin: 0;
 `;
 
 export const BuyButton = styled.button`
-  padding: 15px 30px;
+  padding: 10px 20px;
   background-color: #1e1e1e;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
+  margin-top: 10px;
 
   &:hover {
     background-color: #388e3c;
-  }
-`;
-
-export const CepInputContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-`;
-
-export const CepInput = styled.input`
-  padding: 10px;
-  border: 1px solid #333;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 200px;
-`;
-
-export const CalculateButton = styled.button`
-  padding: 10px 20px;
-  background-color: #ffa500;
-  color: #1e1e1e;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background-color: #e69500;
   }
 `;
