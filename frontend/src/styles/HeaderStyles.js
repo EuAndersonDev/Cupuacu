@@ -55,11 +55,13 @@ export const UserTextContainer = styled.div`
 
   p {
     margin: 0;
+    cursor: pointer;
   }
 
   p:first-child {
     margin-bottom: 0.5rem; /* Adiciona margem inferior ao texto "Entrar" */
     align-self: center; /* Centraliza o texto "Entrar" */
+    font-weight: bold; /* Deixa o texto "Entrar" em negrito */
   }
 
   p:last-child {

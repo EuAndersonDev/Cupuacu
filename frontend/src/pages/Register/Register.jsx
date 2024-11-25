@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
   Body,
   Container,
@@ -8,16 +11,48 @@ import {
   Label,
   Input,
   LoginButton,
-  ForgotPassword,
   RegisterSection,
   RegisterTitle,
   RegisterText,
-  RegisterButton
+  RegisterButton,
+  ErrorMessage
 } from '../../styles/LoginStyles';
-import { Link } from 'react-router-dom';
-
 
 function Register() {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError('As senhas não coincidem');
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:3000/auth/register', { email, username, password });
+      const data = response.data;
+      if (response.status === 200) {
+        // Sucesso no registro, faça algo com os dados recebidos
+        console.log('Registro bem-sucedido:', data);
+        // Exiba um alerta de sucesso
+        alert('Usuário registrado com sucesso!');
+        // Redirecionar para a página de login
+        navigate('/login');
+      } else {
+        // Erro no registro, mostre uma mensagem de erro
+        console.error('Erro no registro:', data.message);
+        setError(data.message);
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      setError('Erro ao fazer registro. Tente novamente.');
+    }
+  };
+
   return (
     <Body>
       <Container>
@@ -26,33 +61,56 @@ function Register() {
           <LoginSubtitle>Cadastre-se</LoginSubtitle>
           <LoginText>Fácil, prático e barato :)</LoginText>
 
-          <Label htmlFor="email">E-mail</Label>
-          <Input type="email" id="email" placeholder="Digite seu e-mail" />
+          <form onSubmit={handleRegister}>
+            <Label htmlFor="email">E-mail</Label>
+            <Input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Digite seu e-mail"
+              required
+            />
 
-          <Label htmlFor="usuario">Usuário</Label>
-          <Input type="text" id="usuario" placeholder="Ex: Felisberto Matos" />
+            <Label htmlFor="username">Usuário</Label>
+            <Input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ex: Felisberto Matos"
+              required
+            />
 
-          <Label htmlFor="senha">Defina uma senha</Label>
-          <Input type="password" id="senha" placeholder="Sua senha" />
+            <Label htmlFor="password">Defina uma senha</Label>
+            <Input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Sua senha"
+              required
+            />
 
-          <Label htmlFor="senhaConfirmada">Confirme sua Senha</Label>
-          <Input type="password" id="senhaConfirmada" placeholder="Sua senha" />
+            <Label htmlFor="confirmPassword">Confirme sua Senha</Label>
+            <Input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Sua senha"
+              required
+            />
 
-          <ForgotPassword>
-            <a href="#"></a>
-          </ForgotPassword>
-
-          <LoginButton>Cadastrar</LoginButton>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <LoginButton type="submit">Cadastrar</LoginButton>
+          </form>
         </LoginSection>
 
         <RegisterSection>
-          <RegisterTitle>Já tem uma Conta?</RegisterTitle>
-          <RegisterText>
-          Faça login para acompanhar seus pedidos e continuar suas compras de onde parou.
-          </RegisterText>
-          <Link to="/login">
-            <RegisterButton>Entrar em minha conta</RegisterButton>
-          </Link>
+          <RegisterTitle>Já tem uma conta?</RegisterTitle>
+          <RegisterText>Faça login para acompanhar seus pedidos e continuar suas compras de onde parou.</RegisterText>
+          <RegisterButton onClick={() => navigate('/login')}>Entrar em minha conta</RegisterButton>
         </RegisterSection>
       </Container>
     </Body>

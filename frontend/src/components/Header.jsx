@@ -1,37 +1,40 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { HeaderContainer, Logo, SearchBox, SearchInput, SearchIcon, IconContainer, Icon, UserTextContainer } from '../styles/HeaderStyles';
-import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa'; // Importando ícones do React Icons
+import { useNavigate } from 'react-router-dom';
+import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
+import {
+  HeaderContainer,
+  Logo,
+  SearchBox,
+  SearchInput,
+  SearchIcon,
+  IconContainer,
+  Icon,
+  UserTextContainer
+} from '../styles/HeaderStyles';
 
-function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Header({ isLoggedIn, handleLogout }) {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Lógica para deslogar o usuário
-    setIsLoggedIn(false);
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
-  const handleCartClick = () => {
-    if (!isLoggedIn) {
-      alert('Você precisa estar logado para acessar o carrinho.');
-      navigate('/login');
-    } else {
-      // Lógica para acessar o carrinho
-    }
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register');
   };
 
   return (
     <HeaderContainer>
       <Logo>
-        <Link to="/">
-          <img src="/logo.ico" alt="Logo" />
-        </Link>
+        <img src="/logo.ico" alt="Logo" />
       </Logo>
       <SearchBox>
-        <SearchInput type="text" placeholder="Do que você precisa?" />
+        <SearchInput type="text" placeholder="Buscar produtos..." />
         <SearchIcon>
-          <FaSearch size={16} />
+          <FaSearch size={20} />
         </SearchIcon>
       </SearchBox>
       <IconContainer>
@@ -45,8 +48,8 @@ function Header() {
             <>
               <FaUser size={24} />
               <UserTextContainer>
-                <p>Entrar</p>
-                <p>Cadastrar-se</p>
+                <p onClick={handleLoginClick} style={{ fontWeight: 'bold', cursor: 'pointer' }}>Entrar</p>
+                <p onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>Cadastrar-se</p>
               </UserTextContainer>
             </>
           )}

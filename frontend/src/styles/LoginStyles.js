@@ -114,3 +114,8 @@ export const RegisterButton = styled.button`
   }
 `;
 
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 10px;
+`;

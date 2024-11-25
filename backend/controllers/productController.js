@@ -1,45 +1,35 @@
-const productModel = require("../models/productModel");
+const productModel = require('../models/productModel');
 
-const getAll = async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
-        const products = await productModel.getAll(); 
+        const products = await productModel.getAll();
         return res.status(200).json(products);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to retrieve products' });
+        return res.status(500).json({ error: "Failed to retrieve products" });
     }
 };
 
 const getProductById = async (req, res) => {
-    const { id } = req.params; 
     try {
-        const product = await productModel.getProductById(id);
-        if (!product) {
-            return res.status(404).json({ error: 'Product not found' }); 
-        }
-        return res.status(200).json(product); 
+        const product = await productModel.getProductById(req.params.id);
+        return res.status(200).json(product);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to retrieve product' });
+        return res.status(500).json({ error: "Failed to retrieve product" });
     }
 };
 
 const createProduct = async (req, res) => {
     try {
         const { name, description, price, stock_quantity } = req.body;
-        const createdProduct = await productModel.createProduct({ 
-            name, 
-            description, 
-            price, 
-            stock_quantity 
-        });
+        const createdProduct = await productModel.createProduct({ name, description, price, stock_quantity });
         return res.status(201).json(createdProduct);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to create product' });
+        return res.status(500).json({ error: "Failed to create product" });
     }
 };
-
 
 const updateProduct = async (req, res) => {
     try {
@@ -47,32 +37,24 @@ const updateProduct = async (req, res) => {
         return res.status(200).json(updatedProduct);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to update product' });
+        return res.status(500).json({ error: "Failed to update product" });
     }
 };
 
 const deleteProduct = async (req, res) => {
-    const { id } = req.params; 
     try {
-        const result = await productModel.deleteProduct(id);
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Product not found' }); 
-        }
-        return res.status(200).json({ message: 'Product successfully deleted' });
+        const result = await productModel.deleteProduct(req.params.id);
+        return res.status(200).json({ message: "Product deleted successfully" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to delete product' });
+        return res.status(500).json({ error: "Failed to delete product" });
     }
 };
 
-
-
-
-
 module.exports = {
-    getAll,
+    getAllProducts,
+    getProductById,
     createProduct,
     updateProduct,
-    deleteProduct,
-    getProductById
-}
+    deleteProduct
+};

@@ -1,63 +1,52 @@
-const path = require('path');
-const connection = require(path.join(__dirname, '../config/db'));
+const mysql = require('mysql2/promise');
+const db = require('../config/db');
 
+// Função para criar um novo produto
+const createProduct = async (name, description, price, stock_quantity) => {
+  const connection = await db.getConnection();
+  const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const query = 'INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)';
+  const [result] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
+  return { id: result.insertId, name, description, price, stock_quantity, created_at: dataUTC, updated_at: dataUTC };
+};
+
+// Função para obter todos os produtos
 const getAll = async () => {
-    const [products] = await connection.execute("SELECT * FROM products");
-    return products;
+  const connection = await db.getConnection();
+  const query = 'SELECT * FROM products';
+  const [rows] = await connection.execute(query);
+  return rows;
 };
 
+// Função para obter um produto por ID
 const getProductById = async (id) => {
-    const query = "SELECT * FROM products WHERE id = ?";
-    const [products] = await connection.execute(query, [id]);
-    return products[0];
+  const connection = await db.getConnection();
+  const query = 'SELECT * FROM products WHERE id = ?';
+  const [rows] = await connection.execute(query, [id]);
+  return rows[0];
 };
 
-
-const createProduct = async ({ name, description, price, stock_quantity }) => {
-    const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' '); // Formata a data corretamente
-    const query = `
-        INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) 
-        VALUES (?, ?, ?, ?, ?, ?)`;
-    const [{ insertId }] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
-    return { 
-        insertId, 
-        name, 
-        description, 
-        price, 
-        stock_quantity, 
-        created_at: dataUTC, 
-        updated_at: dataUTC 
-    };
-};
-
+// Função para atualizar um produto
 const updateProduct = async (id, product) => {
-    const { name, description, price, stock_quantity } = product;
-    const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' '); 
-    const query = `
-        UPDATE products 
-        SET name = ?, description = ?, price = ?, stock_quantity = ?, updated_at = ?
-        WHERE id = ?
-    `;
-    await connection.execute(query, [name, description, price, stock_quantity, dataUTC, id]);
-    return { id, name, description, price, stock_quantity, updated_at: dataUTC };
+  const connection = await db.getConnection();
+  const query = 'UPDATE products SET name = ?, description = ?, price = ?, stock_quantity = ?, updated_at = ? WHERE id = ?';
+  const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const [result] = await connection.execute(query, [product.name, product.description, product.price, product.stock_quantity, dataUTC, id]);
+  return result;
 };
 
-
+// Função para deletar um produto
 const deleteProduct = async (id) => {
-    const query = "DELETE FROM products WHERE id = ?";
-    const [result] = await connection.execute(query, [id]); 
-    return result; 
+  const connection = await db.getConnection();
+  const query = 'DELETE FROM products WHERE id = ?';
+  const [result] = await connection.execute(query, [id]);
+  return result;
 };
-
-
-
-
 
 module.exports = {
-    getAll,
-    createProduct,
-    updateProduct,
-    deleteProduct,
-    getProductById
-   
+  createProduct,
+  getAll,
+  getProductById,
+  updateProduct,
+  deleteProduct
 };
