@@ -13,17 +13,18 @@ const getProductById = async (id) => {
 };
 
 
-const createProduct = async ({ name, description, price, stock_quantity }) => {
+const createProduct = async ({ name, description, price, image, stock_quantity }) => {
     const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' '); // Formata a data corretamente
     const query = `
-        INSERT INTO products (name, description, price, stock_quantity, created_at, updated_at) 
+        INSERT INTO products (name, description, price, image, stock_quantity, created_at, updated_at) 
         VALUES (?, ?, ?, ?, ?, ?)`;
-    const [{ insertId }] = await connection.execute(query, [name, description, price, stock_quantity, dataUTC, dataUTC]);
+    const [{ insertId }] = await connection.execute(query, [name, description, price, image, stock_quantity, dataUTC, dataUTC]);
     return { 
         insertId, 
         name, 
         description, 
         price, 
+        image,
         stock_quantity, 
         created_at: dataUTC, 
         updated_at: dataUTC 
@@ -31,15 +32,15 @@ const createProduct = async ({ name, description, price, stock_quantity }) => {
 };
 
 const updateProduct = async (id, product) => {
-    const { name, description, price, stock_quantity } = product;
+    const { name, description, price, image, stock_quantity } = product;
     const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' '); 
     const query = `
         UPDATE products 
-        SET name = ?, description = ?, price = ?, stock_quantity = ?, updated_at = ?
+        SET name = ?, description = ?, price= ?, image = ?, stock_quantity = ?, updated_at = ?
         WHERE id = ?
     `;
-    await connection.execute(query, [name, description, price, stock_quantity, dataUTC, id]);
-    return { id, name, description, price, stock_quantity, updated_at: dataUTC };
+    await connection.execute(query, [name, description, price, image, stock_quantity, dataUTC, id]);
+    return { id, name, description, price, image, stock_quantity, updated_at: dataUTC };
 };
 
 
