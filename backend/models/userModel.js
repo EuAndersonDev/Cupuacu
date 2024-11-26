@@ -12,11 +12,17 @@ const getUserById = async (id) => {
     return users[0];
 };
 
-const createUser = async ({ username, email, password, role }) => {
+const getUserByEmail = async (email) => {
+    const query = "SELECT * FROM users WHERE email = ?";
+    const [users] = await connection.execute(query, [email]);
+    return users[0];
+};
+
+const createUser = async ({ username, email, password }) => {
     const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const query = `INSERT INTO users (username, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)`;
-    const [{ insertId }] = await connection.execute(query, [username, email, password, role, dataUTC, dataUTC]);
-    return { insertId, username, email, password, role, created_at: dataUTC, updated_at: dataUTC };
+    const query = `INSERT INTO users (username, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`;
+    const [{ insertId }] = await connection.execute(query, [username, email, password, dataUTC, dataUTC]);
+    return { insertId, username, email, password, created_at: dataUTC, updated_at: dataUTC };
 };
 
 const updateUser = async (id, user) => {
@@ -40,4 +46,5 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    getUserByEmail,
 };
