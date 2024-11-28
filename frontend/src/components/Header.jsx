@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderContainer, Logo, SearchBox, SearchInput, SearchIcon, IconContainer, Icon, UserTextContainer } from '../styles/HeaderStyles';
 import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa'; // Importando ícones do React Icons
@@ -7,9 +7,15 @@ function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const authToken = sessionStorage.getItem('authToken');
+    setIsLoggedIn(!!authToken);
+  }, []);
+
   const handleLogout = () => {
-    // Lógica para deslogar o usuário
+    sessionStorage.removeItem('authToken');
     setIsLoggedIn(false);
+    navigate('/login');
   };
 
   const handleCartClick = () => {
@@ -17,7 +23,7 @@ function Header() {
       alert('Você precisa estar logado para acessar o carrinho.');
       navigate('/login');
     } else {
-      // Lógica para acessar o carrinho
+      navigate('/cart');
     }
   };
 
@@ -37,9 +43,9 @@ function Header() {
         </Link>
       </Logo>
       <SearchBox>
-        <SearchInput type="text" placeholder="Do que você precisa?" />
+        <SearchInput type="text" placeholder="Buscar produtos..." />
         <SearchIcon>
-          <FaSearch size={16} />
+          <FaSearch />
         </SearchIcon>
       </SearchBox>
       <IconContainer>

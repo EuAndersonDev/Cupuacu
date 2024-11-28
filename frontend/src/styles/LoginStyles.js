@@ -1,4 +1,3 @@
-// LoginStyles.js
 import styled from 'styled-components';
 
 export const Body = styled.div`
@@ -13,19 +12,34 @@ export const Body = styled.div`
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: row; /* Altere para row para que as seções fiquem lado a lado */
   width: 800px;
   background-color: #a0e8e1;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  position: relative; /* Adicionado para posicionar o botão de voltar */
+`;
+
+export const BackButton = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 /* Seção de login */
 export const LoginSection = styled.div`
   background-color: #c8f7f4;
   padding: 20px;
-  width: 50%;
+  width: 50%; /* Ajuste a largura para 50% */
   border-radius: 10px;
+  margin-right: 10px; /* Adicione uma margem direita para espaçamento */
 `;
 
 export const LoginTitle = styled.h2`
@@ -77,8 +91,10 @@ export const ForgotPassword = styled.div`
 
 /* Seção de cadastro */
 export const RegisterSection = styled.div`
-  width: 50%;
+  background-color: #c8f7f4;
   padding: 20px;
+  width: 50%; /* Ajuste a largura para 50% */
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,3 +135,42 @@ export const RegisterButton = styled.button`
   }
 `;
 
+/* Seção de troca (SwitchSection) */
+export const SwitchSection = styled.div`
+  padding: 20px;
+  width: 50%; /* Ajuste a largura para 50% */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #000;
+  text-align: center;
+`;
+
+export const SwitchTitle = styled.h2`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+
+export const SwitchText = styled.p`
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+`;
+
+export const SwitchButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #000;
+  background-color: transparent;
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  /* Efeito de hover */
+  &:hover {
+    background-color: #000;    /* Cor de fundo muda para preto */
+    color: #fff;               /* Cor do texto muda para branco */
+    border: 2px solid #fff;    /* Borda muda para branco */
+  }
+`;

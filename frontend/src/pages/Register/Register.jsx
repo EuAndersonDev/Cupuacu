@@ -10,7 +10,12 @@ import {
   Label,
   Input,
   RegisterButton,
-  ErrorMessage
+  ErrorMessage,
+  SwitchSection,
+  SwitchTitle,
+  SwitchText,
+  SwitchButton,
+  BackButton
 } from '../../styles/LoginStyles';
 
 function Register() {
@@ -46,6 +51,9 @@ function Register() {
   return (
     <Body>
       <Container>
+        <BackButton onClick={() => navigate('/')}>
+          <img src="/logo.ico" alt="Voltar para a página principal" />
+        </BackButton>
         <RegisterSection>
           <RegisterTitle>Crie sua conta</RegisterTitle>
           <RegisterText>Preencha os campos abaixo para se registrar.</RegisterText>
@@ -84,7 +92,14 @@ function Register() {
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <RegisterButton type="submit">Registrar</RegisterButton>
           </form>
+          
         </RegisterSection>
+
+        <SwitchSection>
+          <SwitchTitle>Já tem uma Conta?</SwitchTitle>
+          <SwitchText>Faça login para acompanhar seus pedidos e continuar suas compras de onde parou.</SwitchText>
+          <SwitchButton onClick={() => navigate('/login')}>Entrar em minha conta</SwitchButton>
+        </SwitchSection>
       </Container>
     </Body>
   );

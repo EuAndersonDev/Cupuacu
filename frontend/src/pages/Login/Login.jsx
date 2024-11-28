@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,11 +12,12 @@ import {
   Input,
   LoginButton,
   ForgotPassword,
-  RegisterSection,
-  RegisterTitle,
-  RegisterText,
-  RegisterButton,
-  ErrorMessage
+  SwitchSection,
+  SwitchTitle,
+  SwitchText,
+  SwitchButton,
+  ErrorMessage,
+  BackButton
 } from '../../styles/LoginStyles';
 
 function Login() {
@@ -34,8 +34,8 @@ function Login() {
       if (response.status === 200) {
         // Sucesso no login, faça algo com os dados recebidos
         console.log('Login bem-sucedido:', data);
-        // Armazene o token no localStorage
-        localStorage.setItem('authToken', data.token);
+        // Armazene o token no sessionStorage
+        sessionStorage.setItem('authToken', data.token);
         // Exiba um alerta de sucesso
         alert('Login bem-sucedido!');
         // Redirecionar para a página principal ou outra página
@@ -54,6 +54,9 @@ function Login() {
   return (
     <Body>
       <Container>
+        <BackButton onClick={() => navigate('/')}>
+          <img src="/logo.ico" alt="Voltar para a página principal" />
+        </BackButton>
         <LoginSection>
           <LoginTitle>Bem vindo!</LoginTitle>
           <LoginSubtitle>Acesse sua conta</LoginSubtitle>
@@ -86,11 +89,11 @@ function Login() {
           <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
         </LoginSection>
 
-        <RegisterSection>
-          <RegisterTitle>Não tem uma conta?</RegisterTitle>
-          <RegisterText>Cadastre-se agora e aproveite!</RegisterText>
-          <RegisterButton onClick={() => navigate('/register')}>Cadastrar-se</RegisterButton>
-        </RegisterSection>
+        <SwitchSection>
+          <SwitchTitle>Não tem uma conta?</SwitchTitle>
+          <SwitchText>Cadastre-se agora e aproveite!</SwitchText>
+          <SwitchButton onClick={() => navigate('/register')}>Cadastrar-se</SwitchButton>
+        </SwitchSection>
       </Container>
     </Body>
   );

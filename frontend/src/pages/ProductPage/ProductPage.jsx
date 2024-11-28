@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../components/Header.jsx';
 import {
@@ -22,6 +22,7 @@ import {
 
 const ProductPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [cep, setCep] = useState('');
 
@@ -50,7 +51,13 @@ const ProductPage = () => {
   }
 
   const handleBuyClick = () => {
-    alert('Produto comprado!');
+    const authToken = sessionStorage.getItem('authToken');
+    if (!authToken) {
+      alert('Você precisa estar logado para comprar um produto.');
+      navigate('/login');
+    } else {
+      alert('Produto comprado!');
+    }
   };
 
   const handleCalculateClick = () => {

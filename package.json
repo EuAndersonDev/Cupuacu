@@ -1,0 +1,16 @@
+{
+  "name": "cupuacu",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd ./backend && npm run dev\" \"cd ./frontend && npm run dev\"",
+    "install:all": "concurrently \"cd ./backend && npm install\" \"cd ./frontend && npm install\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
