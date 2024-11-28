@@ -85,6 +85,11 @@ export const RegisterSection = styled.div`
   color: #000;
 `;
 
+export const ErrorMessage = styled.div`
+  background-color: #ffcccc;
+  color: #ff0000;
+`
+
 export const RegisterTitle = styled.h2`
   font-size: 20px;
   margin-bottom: 10px;

@@ -21,6 +21,14 @@ function Header() {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+  };
+
   return (
     <HeaderContainer>
       <Logo>
@@ -45,8 +53,8 @@ function Header() {
             <>
               <FaUser size={24} />
               <UserTextContainer>
-                <p>Entrar</p>
-                <p>Cadastrar-se</p>
+                <p onClick={handleLoginClick}>Entrar</p>
+                <p onClick={handleRegisterClick}>Cadastrar-se</p>
               </UserTextContainer>
             </>
           )}

@@ -55,16 +55,11 @@ export const UserTextContainer = styled.div`
 
   p {
     margin: 0;
+    cursor: pointer;
   }
 
-  p:first-child {
-    margin-bottom: 0.5rem; /* Adiciona margem inferior ao texto "Entrar" */
-    align-self: center; /* Centraliza o texto "Entrar" */
-  }
-
-  p:last-child {
-    width: 100%; /* Faz o texto "Cadastrar-se" ocupar toda a largura */
-    text-align: center; /* Centraliza o texto "Cadastrar-se" */
+  p:nth-child(1) {
+    font-weight: bold;
   }
 `;
 
