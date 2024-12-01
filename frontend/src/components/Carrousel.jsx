@@ -12,8 +12,8 @@ import {
   Autoplay,
 } from "swiper/modules";
 
-import slide1 from "../svg/1.svg";
-import slide2 from "../svg/2.svg";
+import slide1 from "../../public/FreteGratis.png";
+import slide2 from "../../public/CompreAqui.png";
 
 function Carrousel() {
   return (

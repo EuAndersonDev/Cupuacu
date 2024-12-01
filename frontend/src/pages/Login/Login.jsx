@@ -55,7 +55,7 @@ function Login() {
     <Body>
       <Container>
         <BackButton onClick={() => navigate('/')}>
-          <img src="/logo.ico" alt="Voltar para a página principal" />
+          <img src="/Logo.svg" alt="Voltar para a página principal" />
         </BackButton>
         <LoginSection>
           <LoginTitle>Bem vindo!</LoginTitle>

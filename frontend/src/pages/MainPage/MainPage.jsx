@@ -5,6 +5,7 @@ import Header from '../../components/Header.jsx';
 import Carrousel from '../../components/Carrousel.jsx';
 import ProductCard from '../../components/ProductCard.jsx';
 import { MainContainer } from '../../styles/HeaderStyles.js';
+import { Body } from '../../styles/MainPageStyles.js';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -23,6 +24,14 @@ function MainPage() {
           product.originalPrice = product.discountedPrice / (1 - discountPercentage / 100);
         });
 
+        //30% de chance do frete do produto ser gratis
+        const totalProducts = products.length;
+        const freeShippingCount = Math.floor(totalProducts * 0.3);
+        const shuffledProducts = products.sort(() => 0.5 - Math.random());
+        shuffledProducts.slice(0, freeShippingCount).forEach(product => {
+          product.hasFreeShipping = true;
+        });
+
         setProducts(products);
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);
@@ -38,6 +47,7 @@ function MainPage() {
 
   return (
     <>
+    <Body>
       <MainContainer>
         <Header />
         {/* Outros componentes ou conteúdo da MainPage */}
@@ -48,6 +58,7 @@ function MainPage() {
           <ProductCard key={product.id} product={product} onClick={() => handleProductClick(product)} />
         ))}
       </div>
+    </Body>
     </>
   );
 }

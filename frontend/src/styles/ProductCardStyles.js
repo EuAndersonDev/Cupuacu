@@ -68,15 +68,15 @@ export const FreeShipping = styled.p`
 
 export const BuyButton = styled.button`
   padding: 10px 20px;
-  background-color: #1e1e1e;
+  background-color: #3b60e4;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: opacity 0.7s;
   margin-top: 10px;
 
   &:hover {
-    background-color: #388e3c;
+    opacity: 0.7;
   }
 `;

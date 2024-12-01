@@ -59,15 +59,15 @@ export const FreeShipping = styled.p`
 
 export const BuyButton = styled.button`
   padding: 15px 30px;
-  background-color: #1e1e1e;
+  background-color: #3b60e4;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: opacity 0.3s;
 
   &:hover {
-    background-color: #388e3c;
+    opacity: 0.7
   }
 `;
 
@@ -87,15 +87,15 @@ export const CepInput = styled.input`
 
 export const CalculateButton = styled.button`
   padding: 10px 20px;
-  background-color: #ffa500;
+  background-color: #99e1d9  ;
   color: #1e1e1e;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: opacity 0.3s;
 
   &:hover {
-    background-color: #e69500;
+    opacity: 0.9;
   }
 `;
 

@@ -1,5 +1,16 @@
 const productModel = require("../models/productModel");
+const express = require('express');
+const router = express.Router();
+const Product = require('../models/productModel');
 
+router.get('/products', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to find Products ', error });
+    }
+});
 const getAll = async (req, res) => {
     try {
         const products = await productModel.getAll(); 
@@ -74,5 +85,6 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
-    getProductById
+    getProductById,
+    router
 }

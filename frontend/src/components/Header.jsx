@@ -39,7 +39,7 @@ function Header() {
     <HeaderContainer>
       <Logo>
         <Link to="/">
-          <img src="/logo.ico" alt="Logo" />
+          <img src="/Logo.svg" alt="Logo" />
         </Link>
       </Logo>
       <SearchBox>

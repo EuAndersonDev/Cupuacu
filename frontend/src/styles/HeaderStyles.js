@@ -13,8 +13,8 @@ export const Logo = styled.div`
   align-items: center;
 
   img {
-    width: 40px; /* Tamanho da logo */
-    height: 40px;
+    width: 49px; /* Tamanho da logo */
+    height: 49px;
   }
 `;
 

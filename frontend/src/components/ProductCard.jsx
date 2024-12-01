@@ -20,9 +20,13 @@ const ProductCard = ({ product, onClick }) => {
         <ProductName>{product.name}</ProductName>
         <OriginalPrice>R${product.originalPrice.toFixed(2)}</OriginalPrice>
         <DiscountedPrice>R${product.discountedPrice.toFixed(2)}</DiscountedPrice>
-        <Discount>{((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF</Discount>
-        <Installments>em 12x R${(product.discountedPrice / 12).toFixed(2)}</Installments>
-        <FreeShipping>Frete grátis</FreeShipping>
+        <Discount>
+          {((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF
+        </Discount>
+        <Installments>
+          em 12x R${(product.discountedPrice / 12).toFixed(2)}
+        </Installments>
+        {product.hasFreeShipping && <FreeShipping>Frete grátis</FreeShipping>}
         <BuyButton>Comprar</BuyButton>
       </ProductDetails>
     </ProductCardContainer>
@@ -38,6 +42,7 @@ ProductCard.propTypes = {
     price: PropTypes.number.isRequired,
     originalPrice: PropTypes.number.isRequired,
     discountedPrice: PropTypes.number.isRequired,
+    hasFreeShipping: PropTypes.bool,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
