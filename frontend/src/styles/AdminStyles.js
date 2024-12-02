@@ -65,3 +65,11 @@ export const DeleteButton = styled(Button)`
     background-color: #d32f2f;
   }
 `;
+
+export const ChangeButton = styled(Button)`
+  background-color: #f0d22a;
+
+  &:hover {
+    background-color: #b69f20;
+  }
+`;

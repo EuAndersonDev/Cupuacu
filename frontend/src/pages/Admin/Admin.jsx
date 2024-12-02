@@ -8,7 +8,8 @@ import {
     Button, 
     Input, 
     Table, 
-    DeleteButton 
+    DeleteButton, 
+    ChangeButton
 } from "../../styles/AdminStyles";
 
 const Admin = () => {
@@ -33,8 +34,13 @@ const Admin = () => {
     <Header />
     <Container>
       <Title>Gerenciar Produtos</Title>
+      <Input placeholder="ID" type="number" />
       <Input placeholder="Nome do Produto" />
+      <Input placeholder="Descrição"  />
       <Input placeholder="Preço" type="number" />
+      <Input placeholder="Estoque" type="number" />
+      <Input placeholder="URL da imagem" />
+
       <Button>Adicionar Produto</Button>
 
       <Table>
@@ -51,6 +57,7 @@ const Admin = () => {
             <td>{Admin.price}</td>
             <td>
               <DeleteButton>Remover</DeleteButton>
+              <ChangeButton>Alterar</ChangeButton>
             </td>
           </tr>
         </tbody>
