@@ -17,15 +17,17 @@ export const Container = styled.div`
 export const Title = styled.h1`
   font-size: 2rem;
   color: #333;
+  margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin: 10px;
 
   &:hover {
     background-color: #45a049;
@@ -33,16 +35,16 @@ export const Button = styled.button`
 `;
 
 export const Input = styled.input`
-  margin: 10px 0;
+  margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 300px;
+  width: calc(100% - 40px);
 `;
 
 export const Table = styled.table`
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
   margin-top: 20px;
 
   th,
@@ -72,4 +74,13 @@ export const ChangeButton = styled(Button)`
   &:hover {
     background-color: #b69f20;
   }
+`;
+
+export const TableRow = styled.tr`
+  border-bottom: 1px solid #ddd;
+`;
+
+export const TableCell = styled.td`
+  padding: 10px;
+  text-align: left;
 `;

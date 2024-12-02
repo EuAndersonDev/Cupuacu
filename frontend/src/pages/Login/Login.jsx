@@ -6,18 +6,16 @@ import {
   Container,
   LoginSection,
   LoginTitle,
-  LoginSubtitle,
   LoginText,
   Label,
   Input,
   LoginButton,
-  ForgotPassword,
-  SwitchSection,
-  SwitchTitle,
-  SwitchText,
-  SwitchButton,
   ErrorMessage,
-  BackButton
+  BackButton,
+  SwitchSection,
+  SwitchButton,
+  SwitchText,
+  SwitchTitle 
 } from '../../styles/LoginStyles';
 
 function Login() {
@@ -32,22 +30,18 @@ function Login() {
       const response = await axios.post('http://localhost:3000/auth/login', { email, password });
       const data = response.data;
       if (response.status === 200) {
-        // Sucesso no login, faça algo com os dados recebidos
-        console.log('Login bem-sucedido:', data);
-        // Armazene o token no sessionStorage
+        // Sucesso no login, armazene o token e o tipo de usuário no sessionStorage
         sessionStorage.setItem('authToken', data.token);
-        // Exiba um alerta de sucesso
-        alert('Login bem-sucedido!');
+        sessionStorage.setItem('userType', data.userType); // Armazene o tipo de usuário
         // Redirecionar para a página principal ou outra página
         navigate('/');
       } else {
         // Erro no login, mostre uma mensagem de erro
-        console.error('Erro no login:', data.message);
         setError(data.message);
       }
     } catch (error) {
-      console.error('Erro na requisição:', error);
       setError('Erro ao fazer login. Tente novamente.');
+      console.log(error);
     }
   };
 
@@ -55,12 +49,11 @@ function Login() {
     <Body>
       <Container>
         <BackButton onClick={() => navigate('/')}>
-          <img src="/Logo.svg" alt="Voltar para a página principal" />
+          <img src="/logo.ico" alt="Voltar para a página principal" />
         </BackButton>
         <LoginSection>
-          <LoginTitle>Bem vindo!</LoginTitle>
-          <LoginSubtitle>Acesse sua conta</LoginSubtitle>
-          <LoginText>Fácil, prático e barato :)</LoginText>
+          <LoginTitle>Entrar</LoginTitle>
+          <LoginText>Preencha os campos abaixo para entrar.</LoginText>
 
           <form onSubmit={handleLogin}>
             <Label htmlFor="email">E-mail</Label>
@@ -86,13 +79,13 @@ function Login() {
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <LoginButton type="submit">Entrar</LoginButton>
           </form>
-          <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
+          
         </LoginSection>
 
         <SwitchSection>
-          <SwitchTitle>Não tem uma conta?</SwitchTitle>
-          <SwitchText>Cadastre-se agora e aproveite!</SwitchText>
-          <SwitchButton onClick={() => navigate('/register')}>Cadastrar-se</SwitchButton>
+          <SwitchTitle>Não tem uma Conta?</SwitchTitle>
+          <SwitchText>Registre-se para acompanhar seus pedidos e continuar suas compras de onde parou.</SwitchText>
+          <SwitchButton onClick={() => navigate('/register')}>Criar uma conta</SwitchButton>
         </SwitchSection>
       </Container>
     </Body>

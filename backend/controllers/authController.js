@@ -11,7 +11,11 @@ const login = async (req, res) => {
             req.session = {};
         }
         req.session.user = user; // Certifique-se de que req.session existe
-        return res.status(200).json({ message: 'Login bem-sucedido' });
+        return res.status(200).json({ 
+            message: 'Login bem-sucedido',
+            token: 'some-auth-token', // Substitua por um token real se estiver usando JWT
+            userType: user.role // Inclua o tipo de usuário na resposta
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro no servidor' });

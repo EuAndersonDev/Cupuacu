@@ -51,6 +51,7 @@ function MainPage() {
         {/* Outros componentes ou conteúdo da MainPage */}
       </MainContainer>
       <Carrousel />
+      <br></br>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
         {products.map(product => (
           <ProductCard key={product.id} product={product} onClick={() => handleProductClick(product)} />

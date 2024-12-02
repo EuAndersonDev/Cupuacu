@@ -5,16 +5,21 @@ import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa'; // Importando
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const authToken = sessionStorage.getItem('authToken');
+    const userType = sessionStorage.getItem('userType');
     setIsLoggedIn(!!authToken);
+    setUserType(userType);
   }, []);
 
   const handleLogout = () => {
     sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('userType');
     setIsLoggedIn(false);
+    setUserType('');
     navigate('/login');
   };
 
@@ -54,7 +59,14 @@ function Header() {
         </Icon>
         <Icon>
           {isLoggedIn ? (
-            <button onClick={handleLogout}>Deslogar</button>
+            <>
+              {userType === 'admin' && (
+                <>
+                  <button onClick={() => navigate('/admin')}>Painel Admin</button>
+                </>
+              )}
+              <button onClick={handleLogout}>Deslogar</button>
+            </>
           ) : (
             <>
               <FaUser size={24} />

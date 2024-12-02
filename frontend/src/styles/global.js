@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
   }
 `;
 
