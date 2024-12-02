@@ -129,9 +129,14 @@ VALUES
     ('Farinha de Trigo 1kg', 'Farinha de trigo para bolos e massas.', 4.99, 100, 'https://carrefourbrfood.vtexassets.com/arquivos/ids/205423/7868901_1.jpg?v=637272457079730000'),
     ('Fone Bluetooth TWS', 'Fone Bluetooth sem fio.', 28.99, 120, 'https://http2.mlstatic.com/D_NQ_NP_2X_614461-MLB70823696395_082023-F.webp'),
     ('Carregador Portáti (Power Bank)', 'Power Bank Ultra Rápido 20000mAh 20W 2 Saídas USB + 1 Saída/Entrada USB-C Preto.', 144.49, 50, 'https://carrefourbrfood.vtexassets.com/arquivos/ids/20474491/power-bank-i2go-pro-20000mah-1464-pt-4.jpg?v=637619578960970000'),
-    ('Echo Dot 5°Geração', 'O Echo Dot com o melhor som já lançado | Cor Preta', 252.27, 250, 'https://m.media-amazon.com/images/I/71xoR4A6q-L._AC_SX679_.jpg');
+    ('Echo Dot 5°Geração', 'O Echo Dot com o melhor som já lançado | Cor Preta', 252.27, 250, 'https://m.media-amazon.com/images/I/71xoR4A6q-L._AC_SX679_.jpg'),
+    ('Azeite de Oliva', "Azeite de oliva extra virgem Andorinha, 500ml", 48.99, 127, 'https://mfresh.s3.amazonaws.com/uploads/product/sku/9331/image/7fa2307f-0147-4588-9b10-1f01637e3230.jpg'),
+    ('Capinha de Iphone', 'Capinha Anti Shock Para iPhone 7 8 X Xr 11 12 13 14 Max', 17.90, 50, 'https://http2.mlstatic.com/D_NQ_NP_798063-MLB53858778105_022023-O.webp'),
+    ('Ventilador de teto', 'Ventilador De Teto Ventisol Fenix Inverter C/controle Estrutura Branco Pás Branco Diâmetro 960 mm Material das pás Plástico Quantidade de pás 3 127V/220V', 319.99, 20, 'https://http2.mlstatic.com/D_NQ_NP_892670-MLA51543175059_092022-O.webp'),
+    ('Máscara para cílios', 'Máscara para cílios Payot 66g cor preto', 24.89, 50, 'https://http2.mlstatic.com/D_NQ_NP_611155-MLU78051455927_072024-O.webp'),
+    ('Kaiak Masculino', 'Desodorante Colônia Kaiak Masculino 100 Ml', 109.90, 180, 'https://http2.mlstatic.com/D_NQ_NP_928982-MLB80784794598_112024-O.webp'),
+    ('Smart TV 4K 55"', 'Smart TV 4K 55" LG NanoCell 55NANO80T Processador a5 Ger7 AI Hub de Esportes Alexa/Chromecast integrado webOS 24 Controle Smart Magic', 2.699, 80, 'https://http2.mlstatic.com/D_NQ_NP_832309-MLU77231575290_072024-O.webp')
 
 SELECT * FROM products
 
 DROP DATABASE mercadoJAM
-

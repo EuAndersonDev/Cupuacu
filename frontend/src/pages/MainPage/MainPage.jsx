@@ -5,7 +5,6 @@ import Header from '../../components/Header.jsx';
 import Carrousel from '../../components/Carrousel.jsx';
 import ProductCard from '../../components/ProductCard.jsx';
 import { MainContainer } from '../../styles/HeaderStyles.js';
-import { Body } from '../../styles/MainPageStyles.js';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -47,7 +46,6 @@ function MainPage() {
 
   return (
     <>
-    <Body>
       <MainContainer>
         <Header />
         {/* Outros componentes ou conteúdo da MainPage */}
@@ -58,7 +56,6 @@ function MainPage() {
           <ProductCard key={product.id} product={product} onClick={() => handleProductClick(product)} />
         ))}
       </div>
-    </Body>
     </>
   );
 }
