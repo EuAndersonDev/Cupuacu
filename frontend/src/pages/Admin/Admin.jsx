@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import Header from '../../components/Header';
-import { Container, Title, Input, Button, Table, TableRow, TableCell } from '../../styles/AdminStyles';
+import { Container, Title, Input, Button, Table, TableRow, TableCell, DeleteButton, ChangeButton, ButtonContainer } from '../../styles/AdminStyles';
 
 function Admin() {
   const [products, setProducts] = useState([]);
@@ -34,6 +35,14 @@ function Admin() {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
+    const { name, description, price, image, stock_quantity } = newProduct;
+
+    // Verificar se todos os campos estão preenchidos
+    if (!name || !description || !price || !image || !stock_quantity) {
+      Swal.fire('Erro', 'Por favor, preencha todos os campos.', 'error');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:3000/products', newProduct);
       setProducts([...products, response.data]);
@@ -44,26 +53,66 @@ function Admin() {
         image: '',
         stock_quantity: ''
       });
+      Swal.fire('Sucesso', 'Produto adicionado com sucesso!', 'success');
     } catch (error) {
       console.error('Erro ao adicionar produto:', error);
+      Swal.fire('Erro', 'Erro ao adicionar produto.', 'error');
     }
   };
 
   const handleDeleteProduct = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/products/${id}`);
-      setProducts(products.filter(product => product.id !== id));
-    } catch (error) {
-      console.error('Erro ao deletar produto:', error);
+    const result = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/products/${id}`);
+        setProducts(products.filter(product => product.id !== id));
+        Swal.fire('Excluído!', 'Produto excluído com sucesso.', 'success');
+      } catch (error) {
+        console.error('Erro ao deletar produto:', error);
+        Swal.fire('Erro', 'Erro ao deletar produto.', 'error');
+      }
     }
   };
 
-  const handleUpdateProduct = async (id, updatedProduct) => {
-    try {
-      const response = await axios.put(`http://localhost:3000/products/${id}`, updatedProduct);
-      setProducts(products.map(product => (product.id === id ? response.data : product)));
-    } catch (error) {
-      console.error('Erro ao atualizar produto:', error);
+  const handleEditProduct = async (product) => {
+    const { value: formValues } = await Swal.fire({
+      title: 'Editar Produto',
+      html:
+        `<input id="swal-input1" class="swal2-input" placeholder="Nome" value="${product.name}">` +
+        `<input id="swal-input2" class="swal2-input" placeholder="Descrição" value="${product.description}">` +
+        `<input id="swal-input3" class="swal2-input" placeholder="Preço" type="number" value="${product.price}">` +
+        `<input id="swal-input4" class="swal2-input" placeholder="URL da Imagem" value="${product.image}">` +
+        `<input id="swal-input5" class="swal2-input" placeholder="Quantidade em Estoque" type="number" value="${product.stock_quantity}">`,
+      focusConfirm: false,
+      preConfirm: () => {
+        return {
+          name: document.getElementById('swal-input1').value,
+          description: document.getElementById('swal-input2').value,
+          price: document.getElementById('swal-input3').value,
+          image: document.getElementById('swal-input4').value,
+          stock_quantity: document.getElementById('swal-input5').value
+        }
+      }
+    });
+
+    if (formValues) {
+      try {
+        const response = await axios.put(`http://localhost:3000/products/${product.id}`, formValues);
+        setProducts(products.map(p => (p.id === product.id ? response.data : p)));
+        Swal.fire('Sucesso', 'Produto atualizado com sucesso!', 'success');
+      } catch (error) {
+        console.error('Erro ao atualizar produto:', error);
+        Swal.fire('Erro', 'Erro ao atualizar produto.', 'error');
+      }
     }
   };
 
@@ -128,40 +177,16 @@ function Admin() {
             {products.map(product => (
               <TableRow key={product.id}>
                 <TableCell>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.description}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell>{product.image}</TableCell>
+                <TableCell>{product.stock_quantity}</TableCell>
                 <TableCell>
-                  <Input
-                    value={product.name}
-                    onChange={(e) => handleUpdateProduct(product.id, { ...product, name: e.target.value })}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    value={product.description}
-                    onChange={(e) => handleUpdateProduct(product.id, { ...product, description: e.target.value })}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={product.price}
-                    onChange={(e) => handleUpdateProduct(product.id, { ...product, price: e.target.value })}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    value={product.image}
-                    onChange={(e) => handleUpdateProduct(product.id, { ...product, image: e.target.value })}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={product.stock_quantity}
-                    onChange={(e) => handleUpdateProduct(product.id, { ...product, stock_quantity: e.target.value })}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => handleDeleteProduct(product.id)}>Remover</Button>
+                  <ButtonContainer>
+                    <ChangeButton onClick={() => handleEditProduct(product)}>Editar</ChangeButton>
+                    <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Remover</DeleteButton>
+                  </ButtonContainer>
                 </TableCell>
               </TableRow>
             ))}

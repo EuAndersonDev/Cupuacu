@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HeaderContainer, Logo, SearchBox, SearchInput, SearchIcon, IconContainer, Icon, UserTextContainer } from '../styles/HeaderStyles';
+import { HeaderContainer, Logo, SearchBox, SearchInput, SearchIcon, IconContainer, Icon, UserTextContainer, Button } from '../styles/HeaderStyles';
 import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa'; // Importando ícones do React Icons
 
 function Header() {
@@ -62,10 +62,10 @@ function Header() {
             <>
               {userType === 'admin' && (
                 <>
-                  <button onClick={() => navigate('/admin')}>Painel Admin</button>
+                  <Button onClick={() => navigate('/admin')}>Painel Admin</Button>
                 </>
               )}
-              <button onClick={handleLogout}>Deslogar</button>
+              <Button onClick={handleLogout}>Deslogar</Button>
             </>
           ) : (
             <>

@@ -58,6 +58,41 @@ export const Table = styled.table`
     background-color: #f2f2f2;
     color: #333;
   }
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 5%;
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 15%;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 25%;
+  }
+
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 10%;
+  }
+
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 20%;
+  }
+
+  th:nth-child(6),
+  td:nth-child(6) {
+    width: 10%;
+  }
+
+  th:nth-child(7),
+  td:nth-child(7) {
+    width: 15%;
+  }
 `;
 
 export const DeleteButton = styled(Button)`
@@ -83,4 +118,9 @@ export const TableRow = styled.tr`
 export const TableCell = styled.td`
   padding: 10px;
   text-align: left;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;

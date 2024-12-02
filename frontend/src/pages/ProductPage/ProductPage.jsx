@@ -50,13 +50,25 @@ const ProductPage = () => {
     return <div>Produto não encontrado</div>;
   }
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async () => {
     const authToken = sessionStorage.getItem('authToken');
     if (!authToken) {
       alert('Você precisa estar logado para comprar um produto.');
       navigate('/login');
     } else {
-      alert('Produto comprado!');
+      try {
+        const response = await axios.post(`http://localhost:3000/products/${id}/decreaseStock`, { quantity: 1 });
+        if (response.status === 200) {
+          alert('Produto comprado!');
+          setProduct({ ...product, stock_quantity: product.stock_quantity - 1 });
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          alert('Estoque insuficiente.');
+        } else {
+          console.error('Erro ao comprar produto:', error);
+        }
+      }
     }
   };
 
@@ -79,7 +91,9 @@ const ProductPage = () => {
           <Installments>em 12x R${(product.discountedPrice / 12).toFixed(2)}</Installments>
           <FreeShipping>Frete grátis</FreeShipping>
           <ProductDescription>{product.description}</ProductDescription>
-          <BuyButton onClick={handleBuyClick}>Comprar</BuyButton>
+          <BuyButton onClick={handleBuyClick} disabled={product.stock_quantity <= 0}>
+            {product.stock_quantity > 0 ? 'Comprar' : 'Sem estoque'}
+          </BuyButton>
           <CepInputContainer>
             <CepInput
               type="text"
