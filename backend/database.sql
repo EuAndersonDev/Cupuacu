@@ -1,13 +1,11 @@
 CREATE DATABASE mercadoJAM;
 USE mercadoJAM;
 
-
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user') DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -45,25 +43,21 @@ CREATE TABLE product_categories (
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    total_price DECIMAL(10, 2) NOT NULL,
-    product_id INT NOT NULL,
-    status ENUM('pending', 'paid', 'shipped', 'delivered', 'canceled') NOT NULL DEFAULT 'pending',
+    total_amount DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE order_items (
-    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    product_id INT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
     quantity INT NOT NULL,
-    unit_price DECIMAL(10, 2) NOT NULL,
-    total_price DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
 CREATE TABLE cart (
@@ -113,8 +107,48 @@ BEGIN
     SELECT v_orderId AS orderId;
 END //
 
-DELIMITER ;
+DELIMITER //
 
+CREATE PROCEDURE update_order(
+    IN p_orderId INT,
+    IN p_items JSON
+)
+BEGIN
+    DECLARE v_totalAmount DECIMAL(10, 2) DEFAULT 0.00;
+
+    -- Calcula o novo total do pedido incluindo os novos itens
+    SET v_totalAmount = (
+        SELECT SUM(JSON_UNQUOTE(JSON_EXTRACT(item, '$.quantity')) * JSON_UNQUOTE(JSON_EXTRACT(item, '$.unit_price')))
+        FROM JSON_TABLE(p_items, '$[*]' COLUMNS (
+            product_id INT PATH '$.product_id',
+            quantity INT PATH '$.quantity',
+            unit_price DECIMAL(10, 2) PATH '$.unit_price'
+        )) AS items
+    ) + (
+        SELECT COALESCE(SUM(quantity * unit_price), 0)
+        FROM order_items
+        WHERE order_id = p_orderId
+    );
+
+    -- Atualiza o valor total do pedido na tabela `orders`
+    UPDATE orders
+    SET total_amount = v_totalAmount, updated_at = NOW()
+    WHERE id = p_orderId;
+
+    -- Insere os novos itens do pedido
+    INSERT INTO order_items (order_id, product_id, quantity, unit_price)
+    SELECT p_orderId, product_id, quantity, unit_price
+    FROM JSON_TABLE(p_items, '$[*]' COLUMNS (
+        product_id INT PATH '$.product_id',
+        quantity INT PATH '$.quantity',
+        unit_price DECIMAL(10, 2) PATH '$.unit_price'
+    )) AS items;
+
+    -- Retorna o ID do pedido atualizado
+    SELECT p_orderId AS orderId;
+END //
+
+DELIMITER ;
 
 INSERT INTO products (name, description, price, stock_quantity, image)
 VALUES
