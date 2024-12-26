@@ -53,7 +53,8 @@ export const UserTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  margin-left: 5px;
+  justify-content: space-between;
   p {
     margin: 0;
     cursor: pointer;
@@ -61,6 +62,7 @@ export const UserTextContainer = styled.div`
 
   p:nth-child(1) {
     font-weight: bold;
+
   }
 `;
 

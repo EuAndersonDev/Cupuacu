@@ -1,19 +1,21 @@
 import styled from 'styled-components';
 
 export const ProductCardContainer = styled.div`
-  width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  &:hover {
-    transform: translateY(-5px);
-  }
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
 `;
 
 export const ProductImage = styled.img`
@@ -84,15 +86,16 @@ export const AddToCartButton = styled.button`
 
 export const BuyButton = styled.button`
   padding: 10px 20px;
-  background-color: #3b60e4;
-  color: #fff;
+  background-color: #28a745;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: opacity 0.7s;
   margin-top: 10px;
+  transition: 0.5s;
 
   &:hover {
-    opacity: 0.7;
+    background-color:rgb(11, 77, 25);
+    transition: 0.5s;
   }
 `;

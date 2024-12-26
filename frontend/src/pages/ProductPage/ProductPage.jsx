@@ -1,126 +1,135 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Header from '../../components/Header.jsx';
-import Swal from 'sweetalert2';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 import {
-  ProductPageContainer,
-  ProductImageContainer,
-  ProductImage,
-  ProductDetails,
-  ProductName,
-  OriginalPrice,
-  DiscountedPrice,
-  Discount,
-  Installments,
-  FreeShipping,
-  BuyButton,
-  CepInputContainer,
-  CepInput,
-  CalculateButton,
-  ProductDescription
-} from '../../styles/ProductPageStyles.js';
+    Container,
+    ProductImage,
+    ProductDetails,
+    ProductName,
+    OriginalPrice,
+    Installments,
+    FreeShipping,
+    AddToCartButton,
+    BuyButton,
+} from "../../styles/ProductPageStyles";
 
 const ProductPage = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [cep, setCep] = useState('');
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/products/${id}`);
-        const product = response.data;
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/products/${id}`
+                );
+                setProduct(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Erro ao buscar produto:", error);
+                setLoading(false);
+            }
+        };
 
-        // Calcula um desconto aleatório entre 0% e 30% para o produto
-        const discountPercentage = Math.random() * 30;
-        product.discountedPrice = parseFloat(product.price);
-        product.originalPrice = product.discountedPrice / (1 - discountPercentage / 100);
+        fetchProduct();
+    }, [id]);
 
-        setProduct(product);
-      } catch (error) {
-        console.error('Erro ao buscar produto:', error);
-      }
+    const handleAddToCart = async () => {
+        try {
+            await axios.post("http://localhost:3000/cart", {
+                productId: product.id,
+                quantity: 1,
+            });
+            Swal.fire(
+                "Adicionado!",
+                "O produto foi adicionado ao carrinho.",
+                "success"
+            );
+        } catch (error) {
+            Swal.fire(
+                "Erro!",
+                "Ocorreu um erro ao adicionar o produto ao carrinho.",
+                "error"
+            );
+        }
     };
 
-    fetchProduct();
-  }, [id]);
-
-  if (!product) {
-    return <div>Produto não encontrado</div>;
-  }
-    const handleAddToCart = async () => {
-    try {
-      await axios.post('http://localhost:3000/cart', { productId: product.id, quantity: 1 });
-      Swal.fire('Adicionado!', 'O produto foi adicionado ao carrinho.', 'success');
-    } catch (error) {
-      Swal.fire('Erro!', 'Ocorreu um erro ao adicionar o produto ao carrinho.', 'error');
-    }
-  };
-
-  if (!product) {
-    return <div>Carregando...</div>;
-  }
-
-  const handleBuyClick = async () => {
-    const authToken = sessionStorage.getItem('authToken');
-    if (!authToken) {
-      alert('Você precisa estar logado para comprar um produto.');
-      navigate('/login');
-    } else {
-      try {
-        const response = await axios.post(`http://localhost:3000/products/${id}/decreaseStock`, { quantity: 1 });
-        if (response.status === 200) {
-          alert('Produto comprado!');
-          setProduct({ ...product, stock_quantity: product.stock_quantity - 1 });
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          alert('Estoque insuficiente.');
+    const handleBuyNow = async () => {
+        const authToken = sessionStorage.getItem("authToken");
+        if (!authToken) {
+            Swal.fire(
+                "Atenção!",
+                "Você precisa estar logado para comprar um produto.",
+                "warning"
+            );
+            navigate("/login");
         } else {
-          console.error('Erro ao comprar produto:', error);
+            try {
+                const response = await axios.post(
+                    `http://localhost:3000/products/${id}/decreaseStock`,
+                    { quantity: 1 }
+                );
+                if (response.status === 200) {
+                    Swal.fire(
+                        "Compra realizada!",
+                        "O produto foi comprado com sucesso.",
+                        "success"
+                    );
+                    setProduct({
+                        ...product,
+                        stock_quantity: product.stock_quantity - 1,
+                    });
+                } else {
+                    Swal.fire("Erro!", "Estoque insuficiente.", "error");
+                }
+            } catch (error) {
+                Swal.fire(
+                    "Erro!",
+                    "Ocorreu um erro ao realizar a compra.",
+                    "error"
+                );
+            }
         }
-      }
+    };
+
+    if (loading) {
+        return <div>Carregando...</div>;
     }
-  };
 
-  const handleCalculateClick = () => {
-    alert(`Calculando frete para o CEP: ${cep}`);
-  };
+    if (!product) {
+        return <div>Produto não encontrado</div>;
+    }
 
-  return (
-    <>
-      <Header />
-      <ProductPageContainer>
-        <ProductImageContainer>
-          <ProductImage src={product.image} alt={product.name} />
-        </ProductImageContainer>
-        <ProductDetails>
-          <ProductName>{product.name}</ProductName>
-          <OriginalPrice>R${product.originalPrice.toFixed(2)}</OriginalPrice>
-          <DiscountedPrice>R${product.discountedPrice.toFixed(2)}</DiscountedPrice>
-          <Discount>{((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF</Discount>
-          <Installments>em 12x R${(product.discountedPrice / 12).toFixed(2)}</Installments>
-          <FreeShipping>Frete grátis</FreeShipping>
-          <AddToCartButton onClick={handleAddToCart}>Adicionar ao Carrinho</AddToCartButton>
-          <ProductDescription>{product.description}</ProductDescription>
-          <BuyButton onClick={handleBuyClick} disabled={product.stock_quantity <= 0}>
-            {product.stock_quantity > 0 ? 'Comprar' : 'Sem estoque'}
-          </BuyButton>
-          <CepInputContainer>
-            <CepInput
-              type="text"
-              placeholder="Digite seu CEP"
-              value={cep}
-              onChange={(e) => setCep(e.target.value)}
-            />
-            <CalculateButton onClick={handleCalculateClick}>Calcular Frete</CalculateButton>
-          </CepInputContainer>
-        </ProductDetails>
-      </ProductPageContainer>
-    </>
-  );
+    return (
+        <Container>
+            <ProductImage src={product.image} alt={product.name} />
+            <ProductDetails>
+                <ProductName>{product.name}</ProductName>
+                <OriginalPrice>
+                    R$
+                    {product.originalPrice
+                        ? product.originalPrice.toFixed(2)
+                        : "N/A"}
+                </OriginalPrice>
+                <Installments>
+                    {product.installments ? product.installments : "N/A"}x de R$
+                    {product.originalPrice && product.installments
+                        ? (
+                              product.originalPrice / product.installments
+                          ).toFixed(2)
+                        : "N/A"}
+                </Installments>
+                <FreeShipping>Frete Grátis</FreeShipping>
+                <AddToCartButton onClick={handleAddToCart}>
+                    Adicionar ao Carrinho
+                </AddToCartButton>
+                <BuyButton onClick={handleBuyNow}>Comprar Agora</BuyButton>
+            </ProductDetails>
+        </Container>
+    );
 };
 
 export default ProductPage;
