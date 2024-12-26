@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import Swal from 'sweetalert2';
 import {
   ProductCardContainer,
   ProductImage,
@@ -9,10 +10,21 @@ import {
   Discount,
   Installments,
   FreeShipping,
-  BuyButton
+  BuyButton,
+  AddToCartButton 
 } from '../styles/ProductCardStyles';
+import axios from 'axios';
 
 const ProductCard = ({ product, onClick }) => {
+  const handleAddToCart = async () => {
+    try {
+      await axios.post('http://localhost:3000/cart', { productId: product.id, quantity: 1 });
+      Swal.fire('Adicionado!', 'O produto foi adicionado ao carrinho.', 'success');
+    } catch (error) {
+      Swal.fire('Erro!', 'Ocorreu um erro ao adicionar o produto ao carrinho.', 'error');
+    }
+  };
+
   return (
     <ProductCardContainer onClick={onClick}>
       <ProductImage src={product.image} alt={product.name} />
@@ -20,31 +32,18 @@ const ProductCard = ({ product, onClick }) => {
         <ProductName>{product.name}</ProductName>
         <OriginalPrice>R${product.originalPrice.toFixed(2)}</OriginalPrice>
         <DiscountedPrice>R${product.discountedPrice.toFixed(2)}</DiscountedPrice>
-        <Discount>
-          {((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF
-        </Discount>
-        <Installments>
-          em 12x R${(product.discountedPrice / 12).toFixed(2)}
-        </Installments>
-        {product.hasFreeShipping && <FreeShipping>Frete grátis</FreeShipping>}
-        <BuyButton>Comprar</BuyButton>
+        <Discount>{product.discount}% OFF</Discount>
+        <Installments>{product.installments}x de R${(product.discountedPrice / product.installments).toFixed(2)}</Installments>
+        <FreeShipping>Frete Grátis</FreeShipping>
+        <AddToCartButton onClick={handleAddToCart}>Adicionar ao Carrinho</AddToCartButton>
       </ProductDetails>
     </ProductCardContainer>
   );
 };
 
 ProductCard.propTypes = {
-  product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string,
-    description: PropTypes.string,
-    price: PropTypes.number.isRequired,
-    originalPrice: PropTypes.number.isRequired,
-    discountedPrice: PropTypes.number.isRequired,
-    hasFreeShipping: PropTypes.bool,
-  }).isRequired,
-  onClick: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired,
+  onClick: PropTypes.func
 };
 
 export default ProductCard;

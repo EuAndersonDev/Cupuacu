@@ -46,6 +46,7 @@ export const Icon = styled.div`
   margin-left: 2.5vw; /* Aproximadamente 51px */
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const UserTextContainer = styled.div`

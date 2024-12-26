@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../components/Header.jsx';
+import Swal from 'sweetalert2';
 import {
   ProductPageContainer,
   ProductImageContainer,
@@ -49,6 +50,18 @@ const ProductPage = () => {
   if (!product) {
     return <div>Produto não encontrado</div>;
   }
+    const handleAddToCart = async () => {
+    try {
+      await axios.post('http://localhost:3000/cart', { productId: product.id, quantity: 1 });
+      Swal.fire('Adicionado!', 'O produto foi adicionado ao carrinho.', 'success');
+    } catch (error) {
+      Swal.fire('Erro!', 'Ocorreu um erro ao adicionar o produto ao carrinho.', 'error');
+    }
+  };
+
+  if (!product) {
+    return <div>Carregando...</div>;
+  }
 
   const handleBuyClick = async () => {
     const authToken = sessionStorage.getItem('authToken');
@@ -90,6 +103,7 @@ const ProductPage = () => {
           <Discount>{((product.originalPrice - product.discountedPrice) / product.originalPrice * 100).toFixed(0)}% OFF</Discount>
           <Installments>em 12x R${(product.discountedPrice / 12).toFixed(2)}</Installments>
           <FreeShipping>Frete grátis</FreeShipping>
+          <AddToCartButton onClick={handleAddToCart}>Adicionar ao Carrinho</AddToCartButton>
           <ProductDescription>{product.description}</ProductDescription>
           <BuyButton onClick={handleBuyClick} disabled={product.stock_quantity <= 0}>
             {product.stock_quantity > 0 ? 'Comprar' : 'Sem estoque'}

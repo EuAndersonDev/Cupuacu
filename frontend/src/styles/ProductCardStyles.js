@@ -68,6 +68,20 @@ export const FreeShipping = styled.p`
   margin: 0;
 `;
 
+export const AddToCartButton = styled.button`
+  padding: 10px 20px;
+  background-color: #3b60e4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #2a45b8;
+  }
+`;
+
 export const BuyButton = styled.button`
   padding: 10px 20px;
   background-color: #3b60e4;
