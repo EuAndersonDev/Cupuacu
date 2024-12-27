@@ -12,6 +12,7 @@ import {
     FreeShipping,
     AddToCartButton,
     BuyButton,
+    ButtonsContainer,
 } from "../../styles/ProductPageStyles";
 
 const ProductPage = () => {
@@ -48,7 +49,7 @@ const ProductPage = () => {
                 "O produto foi adicionado ao carrinho.",
                 "success"
             );
-        } catch (error) {
+        } catch {
             Swal.fire(
                 "Erro!",
                 "Ocorreu um erro ao adicionar o produto ao carrinho.",
@@ -59,6 +60,7 @@ const ProductPage = () => {
 
     const handleBuyNow = async () => {
         const authToken = sessionStorage.getItem("authToken");
+
         if (!authToken) {
             Swal.fire(
                 "Atenção!",
@@ -72,6 +74,7 @@ const ProductPage = () => {
                     `http://localhost:3000/products/${id}/decreaseStock`,
                     { quantity: 1 }
                 );
+
                 if (response.status === 200) {
                     Swal.fire(
                         "Compra realizada!",
@@ -85,7 +88,7 @@ const ProductPage = () => {
                 } else {
                     Swal.fire("Erro!", "Estoque insuficiente.", "error");
                 }
-            } catch (error) {
+            } catch {
                 Swal.fire(
                     "Erro!",
                     "Ocorreu um erro ao realizar a compra.",
@@ -109,7 +112,7 @@ const ProductPage = () => {
             <ProductDetails>
                 <ProductName>{product.name}</ProductName>
                 <OriginalPrice>
-                    R$
+                    R${" "}
                     {product.originalPrice
                         ? product.originalPrice.toFixed(2)
                         : "N/A"}
@@ -123,10 +126,12 @@ const ProductPage = () => {
                         : "N/A"}
                 </Installments>
                 <FreeShipping>Frete Grátis</FreeShipping>
-                <AddToCartButton onClick={handleAddToCart}>
-                    Adicionar ao Carrinho
-                </AddToCartButton>
-                <BuyButton onClick={handleBuyNow}>Comprar Agora</BuyButton>
+                <ButtonsContainer>
+                    <AddToCartButton onClick={handleAddToCart}>
+                        Adicionar ao Carrinho
+                    </AddToCartButton>
+                    <BuyButton onClick={handleBuyNow}>Comprar Agora</BuyButton>
+                </ButtonsContainer>
             </ProductDetails>
         </Container>
     );

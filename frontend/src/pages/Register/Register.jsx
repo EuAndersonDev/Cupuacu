@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import {
   Body,
@@ -34,8 +35,9 @@ function Register() {
         // Sucesso no registro, faça algo com os dados recebidos
         console.log('Registro bem-sucedido:', data);
         // Exiba um alerta de sucesso
-        alert('Registro bem-sucedido!');
+        Swal.fire('Registro bem-sucedido!', 'Sua conta foi criada com sucesso.', 'success');
         // Redirecionar para a página de login ou outra página
+
         navigate('/login');
       } else {
         // Erro no registro, mostre uma mensagem de erro
@@ -44,7 +46,8 @@ function Register() {
       }
     } catch (error) {
       console.error('Erro na requisição:', error);
-      setError('Erro ao fazer registro. Tente novamente.');
+      setError('Ocorreu um erro ao registrar sua conta. Tente novamente.');
+      Swal.fire('Erro!', 'Ocorreu um erro ao registrar sua conta. Tente novamente.', 'error');
     }
   };
 

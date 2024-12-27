@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import {
   Body,
@@ -34,14 +35,23 @@ function Login() {
         sessionStorage.setItem('authToken', data.token);
         sessionStorage.setItem('userType', data.userType); // Armazene o tipo de usuário
         // Redirecionar para a página principal ou outra página
+        Swal.fire({
+            icon: "success",
+            title: "Login efetuado com sucesso!",
+            showConfirmButton: false,
+            timer: 150,
+        });
         navigate('/');
       } else {
         // Erro no login, mostre uma mensagem de erro
         setError(data.message);
       }
-    } catch (error) {
-      setError('Erro ao fazer login. Tente novamente.');
-      console.log(error);
+    } catch  {
+      Swal.fire({
+          icon: "error",
+          title: "Erro",
+          text: "Erro ao fazer login. Por favor, tente novamente.",
+      });
     }
   };
 

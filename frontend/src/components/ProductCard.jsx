@@ -10,7 +10,6 @@ import {
     Discount,
     Installments,
     FreeShipping,
-    BuyButton,
     AddToCartButton, // Adicione este estilo
 } from "../styles/ProductCardStyles";
 import axios from "axios";
@@ -27,7 +26,7 @@ const ProductCard = ({ product, onClick }) => {
                 "O produto foi adicionado ao carrinho.",
                 "success"
             );
-        } catch (error) {
+        } catch  {
             Swal.fire(
                 "Erro!",
                 "Ocorreu um erro ao adicionar o produto ao carrinho.",
