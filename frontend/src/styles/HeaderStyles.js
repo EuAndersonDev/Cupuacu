@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 10vw; /* Ajuste as margens laterais */
-  background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 10vw; /* Ajuste as margens laterais */
+    background-color: #a0e8e1;
 `;
 
 export const Logo = styled.div`

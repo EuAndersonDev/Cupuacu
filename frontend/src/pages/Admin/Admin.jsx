@@ -3,7 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Header from '../../components/Header';
 import { Container, Title, Input, Button, Table, TableRow, TableCell, DeleteButton, ChangeButton, ButtonContainer } from '../../styles/AdminStyles';
-
+import Footer from "../../components/Footer";
 function Admin() {
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
@@ -193,6 +193,7 @@ function Admin() {
           </tbody>
         </Table>
       </Container>
+      <Footer/>
     </>
   );
 }

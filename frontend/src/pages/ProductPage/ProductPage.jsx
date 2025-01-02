@@ -14,7 +14,8 @@ import {
     BuyButton,
     ButtonsContainer,
 } from "../../styles/ProductPageStyles";
-
+import  Header from "../../components/Header.jsx";
+import Footer from "../../components/Footer.jsx";
 const ProductPage = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
@@ -22,6 +23,7 @@ const ProductPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(
@@ -107,33 +109,40 @@ const ProductPage = () => {
     }
 
     return (
-        <Container>
-            <ProductImage src={product.image} alt={product.name} />
-            <ProductDetails>
-                <ProductName>{product.name}</ProductName>
-                <OriginalPrice>
-                    R${" "}
-                    {product.originalPrice
-                        ? product.originalPrice.toFixed(2)
-                        : "N/A"}
-                </OriginalPrice>
-                <Installments>
-                    {product.installments ? product.installments : "N/A"}x de R$
-                    {product.originalPrice && product.installments
-                        ? (
-                              product.originalPrice / product.installments
-                          ).toFixed(2)
-                        : "N/A"}
-                </Installments>
-                <FreeShipping>Frete Grátis</FreeShipping>
-                <ButtonsContainer>
-                    <AddToCartButton onClick={handleAddToCart}>
-                        Adicionar ao Carrinho
-                    </AddToCartButton>
-                    <BuyButton onClick={handleBuyNow}>Comprar Agora</BuyButton>
-                </ButtonsContainer>
-            </ProductDetails>
-        </Container>
+        <>
+            <Header />
+            <Container>
+                <ProductImage src={product.image} alt={product.name} />
+                <ProductDetails>
+                    <ProductName>{product.name}</ProductName>
+                    <OriginalPrice>
+                        R${" "}
+                        {product.originalPrice
+                            ? product.originalPrice.toFixed(2)
+                            : "N/A"}
+                    </OriginalPrice>
+                    <Installments>
+                        {product.installments ? product.installments : "N/A"}x
+                        de R$
+                        {product.originalPrice && product.installments
+                            ? (
+                                  product.originalPrice / product.installments
+                              ).toFixed(2)
+                            : "N/A"}
+                    </Installments>
+                    <FreeShipping>Frete Grátis</FreeShipping>
+                    <ButtonsContainer>
+                        <AddToCartButton onClick={handleAddToCart}>
+                            Adicionar ao Carrinho
+                        </AddToCartButton>
+                        <BuyButton onClick={handleBuyNow}>
+                            Comprar Agora
+                        </BuyButton>
+                    </ButtonsContainer>
+                </ProductDetails>
+            </Container>
+            <Footer/>
+        </>
     );
 };
 
