@@ -2,26 +2,29 @@ const db = require('../config/db'); // Conexão com o banco de dados
 
 // Função para adicionar um item ao carrinho
 const addItemToCart = async (productId, userId, quantity) => {
-  // Verifica se o item já existe no carrinho do usuário
-  const [existingItem] = await db.promise().query(
-    'SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?',
-    [productId, userId]
-  );
+    const [existingItem] = await db
+        .promise()
+        .query(
+            "SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?",
+            [productId, userId]
+        );
 
-  if (existingItem.length > 0) {
-    // Se o item já existe, atualize a quantidade
-    const newQuantity = existingItem[0].quantity + quantity;
-    await db.promise().query(
-      'UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?',
-      [newQuantity, productId, userId]
-    );
-  } else {
-    // Caso contrário, insira o novo item no carrinho
-    await db.promise().query(
-      'INSERT INTO cart_items (product_id, user_id, quantity) VALUES (?, ?, ?)',
-      [productId, userId, quantity]
-    );
-  }
+    if (existingItem.length > 0) {
+        const newQuantity = existingItem[0].quantity + quantity;
+        await db
+            .promise()
+            .query(
+                "UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?",
+                [newQuantity, productId, userId]
+            );
+    } else {
+        await db
+            .promise()
+            .query(
+                "INSERT INTO cart_items (product_id, user_id, quantity) VALUES (?, ?, ?)",
+                [productId, userId, quantity]
+            );
+    }
 };
 
 const updateCartItem = async (cartItemId, quantity) => {

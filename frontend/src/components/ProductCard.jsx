@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import axios from "axios";
 import Swal from "sweetalert2";
 import {
     ProductCardContainer,
@@ -8,30 +8,36 @@ import {
     OriginalPrice,
     DiscountedPrice,
     Discount,
-    Installments,
     FreeShipping,
-    AddToCartButton, // Adicione este estilo
+    AddToCartButton,
 } from "../styles/ProductCardStyles";
-import axios from "axios";
 
 const ProductCard = ({ product, onClick }) => {
-    const handleAddToCart = async () => {
+    const randomDiscount = Math.floor(Math.random() * 41) + 10;
+    const discountedPrice = product.originalPrice * (1 - randomDiscount / 100);
+
+    const handleAddToCart = async (e) => {
+        e.stopPropagation(); 
         try {
-            await axios.post("http://localhost:3000/cart", {
+            const response = await axios.post("http://localhost:3000/cart", {
+                userId: userId,
                 productId: product.id,
                 quantity: 1,
             });
+            console.log("Response:", response); 
+
             Swal.fire(
                 "Adicionado!",
                 "O produto foi adicionado ao carrinho.",
                 "success"
             );
-        } catch  {
+        } catch (error) {
             Swal.fire(
                 "Erro!",
                 "Ocorreu um erro ao adicionar o produto ao carrinho.",
                 "error"
             );
+            console.log("Error:", error);
         }
     };
 
@@ -44,15 +50,9 @@ const ProductCard = ({ product, onClick }) => {
                     R${product.originalPrice.toFixed(2)}
                 </OriginalPrice>
                 <DiscountedPrice>
-                    R${product.discountedPrice.toFixed(2)}
+                    R${discountedPrice.toFixed(2)}
                 </DiscountedPrice>
-                <Discount>{product.discount}% OFF</Discount>
-                <Installments>
-                    {product.installments}x de R$
-                    {(product.discountedPrice / product.installments).toFixed(
-                        2
-                    )}
-                </Installments>
+                <Discount>{randomDiscount}% OFF</Discount>
                 <FreeShipping>Frete Grátis</FreeShipping>
                 <AddToCartButton onClick={handleAddToCart}>
                     Adicionar ao Carrinho
@@ -60,11 +60,6 @@ const ProductCard = ({ product, onClick }) => {
             </ProductDetails>
         </ProductCardContainer>
     );
-};
-
-ProductCard.propTypes = {
-    product: PropTypes.object.isRequired,
-    onClick: PropTypes.func,
 };
 
 export default ProductCard;

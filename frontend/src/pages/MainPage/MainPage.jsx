@@ -5,6 +5,7 @@ import Header from '../../components/Header.jsx';
 import Carrousel from '../../components/Carrousel.jsx';
 import ProductCard from '../../components/ProductCard.jsx';
 import { MainContainer } from '../../styles/HeaderStyles.js';
+import Footer from '../../components/Footer.jsx';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function MainPage() {
           <ProductCard key={product.id} product={product} onClick={() => handleProductClick(product)} />
         ))}
       </div>
+      <Footer />
     </>
   );
 }

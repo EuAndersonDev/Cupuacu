@@ -8,7 +8,6 @@ import {
     ProductDetails,
     ProductName,
     OriginalPrice,
-    Installments,
     FreeShipping,
     AddToCartButton,
     BuyButton,
@@ -116,20 +115,8 @@ const ProductPage = () => {
                 <ProductDetails>
                     <ProductName>{product.name}</ProductName>
                     <OriginalPrice>
-                        R${" "}
-                        {product.originalPrice
-                            ? product.originalPrice.toFixed(2)
-                            : "N/A"}
+                        R${product.originalPrice.toFixed(2)}
                     </OriginalPrice>
-                    <Installments>
-                        {product.installments ? product.installments : "N/A"}x
-                        de R$
-                        {product.originalPrice && product.installments
-                            ? (
-                                  product.originalPrice / product.installments
-                              ).toFixed(2)
-                            : "N/A"}
-                    </Installments>
                     <FreeShipping>Frete Grátis</FreeShipping>
                     <ButtonsContainer>
                         <AddToCartButton onClick={handleAddToCart}>
@@ -140,6 +127,7 @@ const ProductPage = () => {
                         </BuyButton>
                     </ButtonsContainer>
                 </ProductDetails>
+                
             </Container>
             <Footer/>
         </>

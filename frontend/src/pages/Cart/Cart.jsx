@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header';
 import { Container, Title, Table, TableRow, TableCell, ButtonContainer, RemoveButton, CheckoutButton } from '../../styles/CartStyles';
+import Footer from '../../components/Footer';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -66,6 +67,7 @@ function Cart() {
         </Table>
         <CheckoutButton onClick={handleCheckout}>Finalizar Compra</CheckoutButton>
       </Container>
+      <Footer />
     </>
   );
 }

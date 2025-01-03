@@ -1,61 +1,56 @@
 import {
     FooterContainer,
-    SocialIcons,
-    Icon,
     EmailForm,
     EmailInput,
     SubmitButton,
-    SocialIconsUni,
-} from "./Footerstyles";
+} from "../styles/FooterStyles";
+import Swal from "sweetalert2";
 
 const Footer = () => {
     const handleEmailSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        const emailTitle = formData.get("title");
+        const emailSubject = formData.get("subject");
         const emailMessage = formData.get("message");
-        const mailto = `mailto:andersondev25@gmail.com?subject=Contact&body=${encodeURIComponent(
-            emailMessage
+        const mailto = `mailto:andersondev25@gmail.com?subject=${encodeURIComponent(
+            emailSubject
+        )}&body=${encodeURIComponent(
+            `Title: ${emailTitle}\n\n${emailMessage}`
         )}`;
+
         window.location.href = mailto;
+
+        console.log("Email enviado com sucesso!");
+
+        Swal.fire({
+            title: "Email Enviado!",
+            text: "Seu email foi enviado com sucesso.",
+            icon: "success",
+            confirmButtonText: "OK",
+        });
     };
 
     return (
         <FooterContainer>
-            <h2>Connect with Me</h2>
-            <SocialIcons>
-                <SocialIconsUni>
-                <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Icon className="fab fa-instagram" />
-                </a>
-                <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Icon className="fab fa-linkedin" />
-                </a>
-                <a
-                    href="https://github.com/AndersonReis04"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Icon className="fab fa-github" />
-                </a>
-                </SocialIconsUni>
-
-
-            </SocialIcons>
-
-            <h3>Send me a message</h3>
+            <h1>Fale conosco</h1>
             <EmailForm onSubmit={handleEmailSubmit}>
                 <EmailInput
                     type="text"
+                    name="title"
+                    placeholder="Title"
+                    required
+                />
+                <EmailInput
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                    required
+                />
+                <EmailInput
+                    type="text"
                     name="message"
-                    placeholder="Type your message here..."
+                    placeholder="Your message"
                     required
                 />
                 <SubmitButton type="submit">Send</SubmitButton>
