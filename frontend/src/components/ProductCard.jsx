@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import PropTypes from 'prop-types';
 import {
     ProductCardContainer,
     ProductImage,
@@ -14,6 +15,7 @@ import {
 
 const ProductCard = ({ product, onClick }) => {
     const randomDiscount = Math.floor(Math.random() * 41) + 10;
+    const userId = 1; 
     const discountedPrice = product.originalPrice * (1 - randomDiscount / 100);
 
     const handleAddToCart = async (e) => {
@@ -60,6 +62,15 @@ const ProductCard = ({ product, onClick }) => {
             </ProductDetails>
         </ProductCardContainer>
     );
+};
+ProductCard.propTypes = {
+    product: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        originalPrice: PropTypes.number.isRequired,
+    }).isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

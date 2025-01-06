@@ -1,11 +1,12 @@
 const cartModel = require("../models/cartModel");
 
 const addItemToCart = async (req, res) => {
-    const { userId, productId, quantity } = req.body;
+    const { userId ,productId, quantity } = req.body;
 
+    console.log(req.body);
     try {
         await cartModel.addItemToCart(productId, userId, quantity);
-        return res.status(201).json({ message: "Item added to cart" });
+        return res.status(201).json({menssage: "Item added to cart"});
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
@@ -38,10 +39,11 @@ const deleteCartItem = async (req, res) => {
 
 const getCartItems = async (req, res) => {
     const { userId } = req.body;
+    console.log(req.body);
 
     try {
-        const cartItems = await cartModel.getCartItems(userId);
-        return res.status(200).json(cartItems);
+        const cart = await cartModel.getCartItems(userId);
+        return res.status(200).json(cart);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
