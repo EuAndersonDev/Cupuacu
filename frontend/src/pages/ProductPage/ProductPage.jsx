@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -15,14 +15,16 @@ import {
 } from "../../styles/ProductPageStyles";
 import  Header from "../../components/Header.jsx";
 import Footer from "../../components/Footer.jsx";
+
 const ProductPage = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const location = useLocation();
+    const { product: locationProduct } = location.state || {};
 
     useEffect(() => {
-
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(
@@ -36,8 +38,13 @@ const ProductPage = () => {
             }
         };
 
-        fetchProduct();
-    }, [id]);
+        if (!locationProduct) {
+            fetchProduct();
+        } else {
+            setProduct(locationProduct);
+            setLoading(false);
+        }
+    }, [id, locationProduct]);
 
     const handleAddToCart = async () => {
         try {

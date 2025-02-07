@@ -20,7 +20,7 @@ const getUserByEmail = async (email) => {
 
 const createUser = async ({ username, email, password }) => {
     const dataUTC = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const query = `INSERT INTO users (username, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`;
     const [{ insertId }] = await connection.execute(query, [username, email, password, dataUTC, dataUTC]);
     return { insertId, username, email, password, created_at: dataUTC, updated_at: dataUTC };
 };
